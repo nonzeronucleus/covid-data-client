@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import {
   decrement,
   increment,
@@ -7,7 +8,79 @@ import {
   incrementAsync,
   selectCount,
 } from './counterSlice';
-import styles from './Counter.module.css';
+
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  :not(:last-child) {
+    margin-bottom: 16px;
+  }
+`;
+
+const Button = styled.button`
+  appearance: none;
+  background: none;
+  font-size: 32px;
+  padding-left: 12px;
+  padding-right: 12px;
+  outline: none;
+  border: 2px solid transparent;
+  color: rgb(112, 76, 182);
+  padding-bottom: 4px;
+  cursor: pointer;
+  background-color: rgba(112, 76, 182, 0.1);
+  border-radius: 2px;
+  transition: all 0.15s;
+
+  :hover, :focus {
+    border: 2px solid rgba(112, 76, 182, 0.4);
+  }
+
+  :active {
+    background-color: rgba(112, 76, 182, 0.2);
+  }
+
+
+`;
+
+const AsyncButton = styled(Button)`
+  position: relative;
+  margin-left: 8px;
+  :after {
+    content: "";
+    background-color: rgba(112, 76, 182, 0.15);
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transition: width 1s linear, opacity 0.5s ease 1s;
+  }
+  :active:after {
+    width: 0%;
+    opacity: 1;
+    transition: 0s
+  }
+`;
+
+const Input = styled.input`
+  font-size: 32px;
+  padding: 2px;
+  width: 64px;
+  text-align: center;
+  margin-right: 8px;
+`;
+
+const Value = styled.span`
+  font-size: 78px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-top: 2px;
+  font-family: 'Courier New', Courier, monospace;
+`;
 
 export function Counter() {
   const count = useSelector(selectCount);
@@ -16,45 +89,40 @@ export function Counter() {
 
   return (
     <div>
-      <div className={styles.row}>
-        <button
-          className={styles.button}
+      <Row>
+        <Button
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
         >
           +
-        </button>
-        <span className={styles.value}>{count}</span>
-        <button
-          className={styles.button}
+        </Button>
+        <Value>{count}</Value>
+        <Button
           aria-label="Decrement value"
           onClick={() => dispatch(decrement())}
         >
           -
-        </button>
-      </div>
-      <div className={styles.row}>
-        <input
-          className={styles.textbox}
+        </Button>
+      </Row>
+      <Row >
+        <Input
           aria-label="Set increment amount"
           value={incrementAmount}
           onChange={e => setIncrementAmount(e.target.value)}
         />
-        <button
-          className={styles.button}
+        <Button
           onClick={() =>
             dispatch(incrementByAmount(Number(incrementAmount) || 0))
           }
         >
           Add Amount
-        </button>
-        <button
-          className={styles.asyncButton}
+        </Button>
+        <AsyncButton
           onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}
         >
           Add Async
-        </button>
-      </div>
+        </AsyncButton>
+      </Row>
     </div>
   );
 }
