@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, {keyframes} from 'styled-components';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { CasesList } from './features/cases/CasesList';
 
 const StyledApp = styled.div`
   text-align: center;
@@ -50,8 +50,7 @@ function App() {
   return (
     <StyledApp>
       <Header>
-        <Logo src={logo} alt="logo" />
-        <Counter />
+        <CasesList />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
