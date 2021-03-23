@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getByArea } from './casesAPI'
+import { get } from 'lodash'
+
+const casesText = 'newCasesBySpecimenDateAgeDemographics';
 
 
 // const
@@ -16,15 +19,29 @@ export const fetchCasesByArea = createAsyncThunk(
 // Then, handle actions in your reducers:
 const casesSlice = createSlice({
   name: 'cases',
-  initialState: { entities: [], loading: 'idle' },
+  initialState: {loading: 'idle' },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: {
-    // Add reducers for additional action types here, and handle loading state as needed
     [fetchCasesByArea.fulfilled]: (state, action) => {
-      // Add user to the state array
-      state.entities.push(action.payload)
+      const records = get(action,'payload');
+      let caseByAge = {};
+
+
+
+      records.forEach(record => {
+        const cases = get(record, casesText)
+        cases.forEach(caseData => {
+          const {age, rollingRate} = caseData;
+          if(caseByAge[age]==null) {
+            caseByAge[age]=[];
+          }
+          caseByAge[age].push({date:record.date,rollingRate});
+        })
+      })
+
+      return {...state, caseByAge};
     }
   }
 })
