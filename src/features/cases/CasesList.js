@@ -1,36 +1,54 @@
-import React from 'react';
-import D3Test from './D3Test';
+import React, { useEffect, useState } from 'react';
+import Chart from './Chart';
 import { useSelector } from 'react-redux';
-import {selectCases} from './CasesSlice';
+import { selectCasesByAge, selectAgeRanges } from './CasesSlice';
 import { get } from 'lodash'
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useArray } from 'react-hanger';
+import styled from 'styled-components';
+import AgeRangePicker from './AgeRangePicker'
+
+
 
 export const CasesList = () => {
-    const caseData = useSelector(selectCases);
-    const casesToDisplay = get(caseData,"caseByAge.00_04", []);
-    const {register, handleSubmit} = useForm();
+    const casesByAge = useSelector(selectCasesByAge);
+    const ageRanges = useSelector(selectAgeRanges);
+    const { register, handleSubmit } = useForm();
+    const [chosenRange, setChosenRange] = useState("");
+    const ranges = useArray([]);
 
+    useEffect(() => {
+        if (ageRanges.length > 0) setChosenRange(ageRanges[0])
+    }, [ageRanges])
 
-    const onSubmit = data => alert(`Submitting Name ${data.gender}`)
+    const onAdd = data => {
+        ranges.add(data);
 
+    }
 
+    const onSubmit = data => console.log({ data })
+    const casesToDisplay = get(casesByAge, chosenRange, []);
+
+    const handleChange = (e) => {
+        setChosenRange(e.target.value);
+    }
 
     return (
         <div>
-           <form onSubmit={handleSubmit(onSubmit)}>
-                <label>
-                    Age Group
-                    <input ref={register} name="ageGroup"/>
-                </label>
-                <select name="gender" ref={register}>
-        <option value="female">female</option>
-        <option value="male">male</option>
-        <option value="other">other</option>
-      </select>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <select name="ageRange" ref={register} onChange={handleChange} >
+                    {
+                        ageRanges.map(range => <option key={range} value={range} >{range}</option>)
+                    }
+                </select>
 
                 <button>Submit</button>
             </form>
-            <D3Test data = {casesToDisplay}/>
+            <Chart data={casesToDisplay} />
+            <AgeRangePicker {...{ onAdd }} />
+            {ranges.value.map((range, i) =>(
+                <div key={i}><span>{range.ageRange}</span>-<span>{range.colour}</span></div>
+            ))}
         </div>
     )
 }

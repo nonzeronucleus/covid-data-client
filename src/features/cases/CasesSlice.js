@@ -28,8 +28,6 @@ const casesSlice = createSlice({
       const records = get(action,'payload');
       let caseByAge = {};
 
-
-
       records.forEach(record => {
         const cases = get(record, casesText)
         cases.forEach(caseData => {
@@ -41,12 +39,16 @@ const casesSlice = createSlice({
         })
       })
 
-      return {...state, caseByAge};
+      const ageRanges=Object.keys(caseByAge);
+
+      return {...state, caseByAge, ageRanges};
     }
   }
 })
 
-export const selectCases = state => state.cases;
+// export const selectCases = state => state.cases;
+export const selectCasesByAge = state => get(state, "cases.caseByAge", {});
+export const selectAgeRanges = state => get(state, "cases.ageRanges", []);
 
 export default casesSlice.reducer;
 
