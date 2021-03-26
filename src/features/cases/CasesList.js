@@ -29,6 +29,11 @@ export const CasesList = () => {
         setChosenRange(e.target.value);
     }
 
+    const handleRemove = index => {
+        ranges.removeIndex(index)
+        console.log(ranges.value)
+    }
+
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -43,7 +48,7 @@ export const CasesList = () => {
             <Chart {...{chosenRange}} ranges = {ranges.value} />
             <AgeRangePicker {...{ onAdd }} />
             {ranges.value.map((range, i) =>(
-                <div key={i}><span>{range.ageRange}</span>-<span>{range.colour}</span></div>
+                <div key={i}><span>{range.ageRange}</span>-<span>{range.colour}</span><button onClick={() => handleRemove(i)}>-</button></div>
             ))}
         </div>
     )

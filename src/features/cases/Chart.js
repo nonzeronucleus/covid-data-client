@@ -8,8 +8,7 @@ const parseTime = d3.timeParse("%Y-%m-%d");
 
 
 
-const drawDataSet = async (x, y, casesToDisplay, graph) => {
-
+const drawDataSet = async (graph, x, y, casesToDisplay, colour) => {
   const valueLine = d3.line()
     .x((d) => { return x(parseTime(d.date)); })
     .y((d) => { return y(d.rollingRate); });
@@ -21,15 +20,14 @@ const drawDataSet = async (x, y, casesToDisplay, graph) => {
   graph.append("path")
     .data([casesToDisplay])
     .attr("class", "line")
+    .attr("stroke", colour)
     .attr("d", valueLine);
 }
 
 
 
 
-const createGraph = async (chosenRange, casesByAge) => {
-  const casesToDisplay = get(casesByAge, chosenRange, []);
-
+const createGraph = async (casesByAge, chosenRange, ranges) => {
   const svg = d3.select("svg")
   svg.selectAll("path").remove()
   svg.selectAll("g").remove()
@@ -47,7 +45,11 @@ const createGraph = async (chosenRange, casesByAge) => {
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  drawDataSet(x, y, casesToDisplay, graph)
+  ranges.forEach(range => {
+    // const casesToDisplay = get(casesByAge, chosenRange, []);
+    const casesToDisplay = get(casesByAge, range.ageRange, []);
+    drawDataSet(graph, x, y, casesToDisplay, range.colour)
+  })
 
   graph.append("g")
     .attr("transform", `translate(0, ${height})`)
@@ -55,15 +57,13 @@ const createGraph = async (chosenRange, casesByAge) => {
 
   graph.append("g")
     .call(d3.axisLeft(y));
-
-
 }
 
 export default function D3Test({ chosenRange, ranges }) {
   const casesByAge = useSelector(selectCasesByAge);
 
   useEffect(() => {
-    createGraph(chosenRange, casesByAge);
+    createGraph(casesByAge, chosenRange, ranges);
   });
 
 
@@ -74,7 +74,6 @@ export default function D3Test({ chosenRange, ranges }) {
           `
                 .line {
                     fill: none;
-                    stroke: steelblue;
                     stroke-width: 2px;
                 }
             `}
@@ -83,3 +82,6 @@ export default function D3Test({ chosenRange, ranges }) {
     </div>
   );
 }
+
+
+// stroke: steelblue;
