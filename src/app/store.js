@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import casesReducer from '../features/cases/CasesSlice';
 
@@ -7,4 +7,5 @@ export default configureStore({
     counter: counterReducer,
     cases: casesReducer
   },
+  middleware: [...getDefaultMiddleware({immutableCheck: false, serializableCheck:false})]
 });
