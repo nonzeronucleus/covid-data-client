@@ -1,26 +1,35 @@
 import React, { useEffect } from "react";
+import { useSelector } from 'react-redux';
+import { get } from 'lodash'
+import { selectCasesByAge } from './CasesSlice';
 import * as d3 from "d3";
 import "d3-time-format";
 const parseTime = d3.timeParse("%Y-%m-%d");
 
 
-const drawDataSet = async (x, y, data, graph) => {
+
+const drawDataSet = async (x, y, casesToDisplay, graph) => {
 
   const valueLine = d3.line()
     .x((d) => { return x(parseTime(d.date)); })
     .y((d) => { return y(d.rollingRate); });
 
 
-  x.domain(d3.extent(data, (d) => { return parseTime(d.date); }));
-  y.domain([0, d3.max(data, (d) => { return d.rollingRate; })]);
+  x.domain(d3.extent(casesToDisplay, (d) => { return parseTime(d.date); }));
+  y.domain([0, d3.max(casesToDisplay, (d) => { return d.rollingRate; })]);
 
   graph.append("path")
-    .data([data])
+    .data([casesToDisplay])
     .attr("class", "line")
     .attr("d", valueLine);
 }
 
-const createGraph = async (data) => {
+
+
+
+const createGraph = async (chosenRange, casesByAge) => {
+  const casesToDisplay = get(casesByAge, chosenRange, []);
+
   const svg = d3.select("svg")
   svg.selectAll("path").remove()
   svg.selectAll("g").remove()
@@ -32,32 +41,13 @@ const createGraph = async (data) => {
   const x = d3.scaleTime().range([0, width]);
   const y = d3.scaleLinear().range([height, 0]);
 
-  // const valueLine = d3.line()
-  //   .x((d) => { return x(parseTime(d.date)); })
-  //   .y((d) => { return y(d.rollingRate); });
-
-
-
-
-  const graph = svg //d3.select("svg")
-    // d3.select("svg")
+  const graph = svg
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-
-  //   svg.selectAll("path").remove()
-
-  // x.domain(d3.extent(data, (d) => { return parseTime(d.date); }));
-  // y.domain([0, d3.max(data, (d) => { return d.rollingRate; })]);
-
-  // graph.append("path")
-  //   .data([data])
-  //   .attr("class", "line")
-  //   .attr("d", valueLine);
-
-  drawDataSet(x, y, data, graph)
+  drawDataSet(x, y, casesToDisplay, graph)
 
   graph.append("g")
     .attr("transform", `translate(0, ${height})`)
@@ -69,10 +59,12 @@ const createGraph = async (data) => {
 
 }
 
-export default function D3Test({ data }) {
+export default function D3Test({ chosenRange, ranges }) {
+  const casesByAge = useSelector(selectCasesByAge);
+
   useEffect(() => {
-    createGraph(data);
-  }, [data]);
+    createGraph(chosenRange, casesByAge);
+  });
 
 
   return (

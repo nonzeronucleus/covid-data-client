@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Chart from './Chart';
 import { useSelector } from 'react-redux';
-import { selectCasesByAge, selectAgeRanges } from './CasesSlice';
-import { get } from 'lodash'
+import { selectAgeRanges } from './CasesSlice';
 import { useForm } from 'react-hook-form';
 import { useArray } from 'react-hanger';
-// import styled from 'styled-components';
 import AgeRangePicker from './AgeRangePicker'
 
 
 
 export const CasesList = () => {
-    const casesByAge = useSelector(selectCasesByAge);
     const ageRanges = useSelector(selectAgeRanges);
     const { register, handleSubmit } = useForm();
     const [chosenRange, setChosenRange] = useState("");
@@ -27,7 +24,6 @@ export const CasesList = () => {
     }
 
     const onSubmit = data => console.log({ data })
-    const casesToDisplay = get(casesByAge, chosenRange, []);
 
     const handleChange = (e) => {
         setChosenRange(e.target.value);
@@ -44,7 +40,7 @@ export const CasesList = () => {
 
                 <button>Submit</button>
             </form>
-            <Chart data={casesToDisplay} />
+            <Chart {...{chosenRange}} ranges = {ranges.value} />
             <AgeRangePicker {...{ onAdd }} />
             {ranges.value.map((range, i) =>(
                 <div key={i}><span>{range.ageRange}</span>-<span>{range.colour}</span></div>
@@ -52,5 +48,3 @@ export const CasesList = () => {
         </div>
     )
 }
-
-// {JSON.stringify(casesToDisplay)}
