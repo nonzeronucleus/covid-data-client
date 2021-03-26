@@ -46,7 +46,7 @@ export const CasesList = () => {
                 <button>Submit</button>
             </form>
             <Chart {...{chosenRange}} ranges = {ranges.value} />
-            <AgeRangePicker {...{ onAdd }} />
+            <AgeRangePicker {...{ onAdd, chosenRanges:ranges.value }} />
             {ranges.value.map((range, i) =>(
                 <div key={i}><span>{range.ageRange}</span>-<span>{range.colour}</span><button onClick={() => handleRemove(i)}>-</button></div>
             ))}
