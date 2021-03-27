@@ -37,8 +37,6 @@ export const AgeRangePicker = ({ onAdd, chosenRanges }) => {
         return null;
     }
 
-    console.log(ageRanges.length, colours.length)
-
     return (
         <StyledRow>
             <form onSubmit={handleSubmit(onAdd)}>
