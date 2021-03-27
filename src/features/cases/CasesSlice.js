@@ -2,10 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getByArea } from './casesAPI'
 import { get } from 'lodash'
 
-// const casesText = 'newCasesBySpecimenDateAgeDemographics';
-const casesText = 'newDeaths28DaysByDeathDateAgeDemographics';
-// const caseByAge = 'caseByAge'
+const casesText = 'newCasesBySpecimenDateAgeDemographics';
+// const casesText = 'newDeaths28DaysByDeathDateAgeDemographics';
 const caseByAge = 'caseByAge'
+// const caseByAge = 'caseByAge'
 
 
 
