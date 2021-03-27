@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Chart from './Chart';
 import { useSelector } from 'react-redux';
 import { selectAgeRanges } from './CasesSlice';
-import { useForm } from 'react-hook-form';
 import { useArray } from 'react-hanger';
 import AgeRangePicker from './AgeRangePicker'
 
@@ -10,7 +9,6 @@ import AgeRangePicker from './AgeRangePicker'
 
 export const CasesList = () => {
     const ageRanges = useSelector(selectAgeRanges);
-    const { register, handleSubmit } = useForm();
     const [chosenRange, setChosenRange] = useState("");
     const ranges = useArray([]);
 
@@ -23,12 +21,6 @@ export const CasesList = () => {
 
     }
 
-    const onSubmit = data => console.log({ data })
-
-    const handleChange = (e) => {
-        setChosenRange(e.target.value);
-    }
-
     const handleRemove = index => {
         ranges.removeIndex(index)
         console.log(ranges.value)
@@ -36,15 +28,6 @@ export const CasesList = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <select name="ageRange" ref={register} onChange={handleChange} >
-                    {
-                        ageRanges.map(range => <option key={range} value={range} >{range}</option>)
-                    }
-                </select>
-
-                <button>Submit</button>
-            </form>
             <Chart {...{chosenRange}} ranges = {ranges.value} />
             <AgeRangePicker {...{ onAdd, chosenRanges:ranges.value }} />
             {ranges.value.map((range, i) =>(

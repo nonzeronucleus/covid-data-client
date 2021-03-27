@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 
-const colours = [
+const allColours = [
     "aqua","blue",
     "navy","purple",
     "olive","green",
@@ -16,7 +16,7 @@ const colours = [
     "silver","black",
     "brown", "Chartreuse",
     "coral", "DarkMagenta",
-    "IndianRed","RosyBrown"
+    "IndianRed"
 ]
 
 
@@ -29,23 +29,28 @@ const StyledRow = styled.div`
 export const AgeRangePicker = ({ onAdd, chosenRanges }) => {
     const chosenAges = chosenRanges.map(range => range.ageRange)
     const chosenColours = chosenRanges.map(range => range.colour)
-    const ageRanges = useSelector(selectAgeRanges);
+    const colours = allColours.filter(colour => !chosenColours.includes(colour))
+    const ageRanges = useSelector(selectAgeRanges).filter(range => !chosenAges.includes(range));
     const { register, handleSubmit } = useForm();
 
+    if (ageRanges.length === 0 || colours.length === 0) {
+        return null;
+    }
 
+    console.log(ageRanges.length, colours.length)
 
     return (
         <StyledRow>
             <form onSubmit={handleSubmit(onAdd)}>
                 <select name="ageRange" ref={register}>
                     {
-                        ageRanges.filter(range => !chosenAges.includes(range)).map(range => <option key={range} value={range} >{range}</option>)
+                        ageRanges.map(range => <option key={range} value={range} >{range}</option>)
                     }
                 </select>
 
                 <select name="colour" ref={register} >
                     {
-                        colours.filter(colour => !chosenColours.includes(colour)).map(colour => <option key={colour} value={colour}>{colour}</option>)
+                        colours.map(colour => <option key={colour} value={colour}>{colour}</option>)
                     }
                 </select>
                 <button>+</button>

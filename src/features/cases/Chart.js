@@ -8,17 +8,18 @@ const parseTime = d3.timeParse("%Y-%m-%d");
 
 
 
-const drawDataSet = async (graph, x, y, casesToDisplay, colour) => {
+const drawDataSet = async (graph, x, y, maxRate, amountToDisplay, colour) => {
   const valueLine = d3.line()
     .x((d) => { return x(parseTime(d.date)); })
     .y((d) => { return y(d.rollingRate); });
 
 
-  x.domain(d3.extent(casesToDisplay, (d) => { return parseTime(d.date); }));
-  y.domain([0, d3.max(casesToDisplay, (d) => { return d.rollingRate; })]);
+  x.domain(d3.extent(amountToDisplay, (d) => { return parseTime(d.date); }));
+  // y.domain([0, d3.max(amountToDisplay, (d) => { return d.rollingRate; })]);
+  y.domain([0, maxRate]);
 
   graph.append("path")
-    .data([casesToDisplay])
+    .data([amountToDisplay])
     .attr("class", "line")
     .attr("stroke", colour)
     .attr("d", valueLine);
@@ -26,8 +27,19 @@ const drawDataSet = async (graph, x, y, casesToDisplay, colour) => {
 
 
 
+const getMaxRate = (casesByAge, ranges) =>
+  d3.max(ranges,
+    (r) => {
+      return d3.max(casesByAge[r.ageRange],
+        (r) => {return r.rollingRate}
+      )
+    }
+  );
 
-const createGraph = async (casesByAge, chosenRange, ranges) => {
+
+
+const createGraph = async (casesByAge, ranges) => {
+  const maxRate = getMaxRate(casesByAge, ranges)
   const svg = d3.select("svg")
   svg.selectAll("path").remove()
   svg.selectAll("g").remove()
@@ -46,9 +58,8 @@ const createGraph = async (casesByAge, chosenRange, ranges) => {
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
   ranges.forEach(range => {
-    // const casesToDisplay = get(casesByAge, chosenRange, []);
-    const casesToDisplay = get(casesByAge, range.ageRange, []);
-    drawDataSet(graph, x, y, casesToDisplay, range.colour)
+    const amountToDisplay = get(casesByAge, range.ageRange, []);
+    drawDataSet(graph, x, y, maxRate, amountToDisplay, range.colour)
   })
 
   graph.append("g")
@@ -59,13 +70,17 @@ const createGraph = async (casesByAge, chosenRange, ranges) => {
     .call(d3.axisLeft(y));
 }
 
-export default function D3Test({ chosenRange, ranges }) {
+export default function D3Test({ ranges }) {
   const casesByAge = useSelector(selectCasesByAge);
 
   useEffect(() => {
-    createGraph(casesByAge, chosenRange, ranges);
+    createGraph(casesByAge, ranges);
   });
 
+
+  // if (ranges.length === 0) {
+  //   return null;
+  // }
 
   return (
     <div>

@@ -2,7 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getByArea } from './casesAPI'
 import { get } from 'lodash'
 
-const casesText = 'newCasesBySpecimenDateAgeDemographics';
+// const casesText = 'newCasesBySpecimenDateAgeDemographics';
+const casesText = 'newDeaths28DaysByDeathDateAgeDemographics';
+// const caseByAge = 'caseByAge'
+const caseByAge = 'caseByAge'
+
+
 
 
 // const
@@ -39,7 +44,7 @@ const casesSlice = createSlice({
         })
       })
 
-      const ageRanges=Object.keys(caseByAge);
+      const ageRanges=Object.keys(caseByAge).filter(a => a !== "unassigned");
 
       return {...state, caseByAge, ageRanges};
     }
