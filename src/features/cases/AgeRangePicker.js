@@ -1,8 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectAgeRanges } from './CasesSlice';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import {addRange, removeRange, selectedRanges} from './ChosenRangesSlice';
 
 
 const allColours = [
@@ -26,23 +27,30 @@ const StyledRow = styled.div`
 `;
 
 
-export const AgeRangePicker = ({ onAdd, chosenRanges }) => {
+const NewRangeSelector = () => {
+    const chosenRanges = useSelector(selectedRanges);
     const chosenAges = chosenRanges.map(range => range.ageRange)
     const chosenColours = chosenRanges.map(range => range.colour)
     const colours = allColours.filter(colour => !chosenColours.includes(colour))
     const ageRanges = useSelector(selectAgeRanges).filter(range => !chosenAges.includes(range));
     const { register, handleSubmit } = useForm();
+    const dispatch = useDispatch();
 
-    if (ageRanges.length === 0 || colours.length === 0) {
-        return null;
+    // if (ageRanges.length === 0 || colours.length === 0) {
+    //     return null;
+    // }
+    const onAdd = data => {
+        dispatch(addRange(data));
     }
+
+
 
     return (
         <StyledRow>
             <form onSubmit={handleSubmit(onAdd)}>
                 <select name="ageRange" ref={register}>
                     {
-                        ageRanges.map(range => <option key={range} value={range} >{range}</option>)
+                        ageRanges.map(range => <option key={range} value={range} >{range.replace("_","-")}</option>)
                     }
                 </select>
 
@@ -54,6 +62,29 @@ export const AgeRangePicker = ({ onAdd, chosenRanges }) => {
                 <button>+</button>
             </form>
         </StyledRow>
+    )
+}
+
+
+export const AgeRangePicker = () => {
+    const chosenRanges = useSelector(selectedRanges);
+    const dispatch = useDispatch();
+
+    // if (ageRanges.length === 0 || colours.length === 0) {
+    //     return null;
+    // }
+
+    const handleRemove = range => {
+        dispatch(removeRange(range));
+    }
+
+    return (
+        <>
+            <NewRangeSelector />
+            {chosenRanges.map((range, i) =>(
+                    <div key={i}><span>{range.ageRange}</span>-<span>{range.colour}</span><button onClick={() => handleRemove(range)}>-</button></div>
+            ))}
+        </>
     )
 }
 
