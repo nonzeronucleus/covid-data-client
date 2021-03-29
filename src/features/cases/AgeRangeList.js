@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import {toggleRange, selectedRanges, getRanges, getRanges2} from './ChosenRangesSlice';
+import {toggleRange, getRanges} from './ChosenRangesSlice';
 // import allColours from './allColours';
 
 // const StyledRow = styled.div`

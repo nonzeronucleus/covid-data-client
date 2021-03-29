@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { get } from 'lodash'
 import { fetchCasesByArea } from './fetchCasesByArea';
 
-const casesText = 'newCasesBySpecimenDateAgeDemographics';
+// const casesText = 'newCasesBySpecimenDateAgeDemographics';
 // const casesText = 'newDeaths28DaysByDeathDateAgeDemographics';
 
 const agesToFilterOut = ["unassigned", "60+", "00_59"]
