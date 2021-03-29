@@ -1,17 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getByArea } from './casesAPI'
+import { createSlice } from '@reduxjs/toolkit'
 import { get } from 'lodash'
+import { fetchCasesByArea } from './fetchCasesByArea';
 
 const casesText = 'newCasesBySpecimenDateAgeDemographics';
 // const casesText = 'newDeaths28DaysByDeathDateAgeDemographics';
 
-export const fetchCasesByArea = createAsyncThunk(
-  'users/fetchCasesByArea',
-  async (userId, thunkAPI) => {
-    const response = await getByArea(userId)
-    return response.data
-  }
-)
+const agesToFilterOut = ["unassigned", "60+", "00_59"]
 
 const casesSlice = createSlice({
   name: 'cases',
@@ -20,28 +14,16 @@ const casesSlice = createSlice({
   },
   extraReducers: {
     [fetchCasesByArea.fulfilled]: (state, action) => {
-      const records = get(action,'payload');
-      let caseByAge = {};
+      let {casesByAge} = get(action,'payload')
 
-      records.forEach(record => {
-        const cases = get(record, casesText)
-        cases.forEach(caseData => {
-          const {age, rollingRate} = caseData;
-          if(caseByAge[age]==null) {
-            caseByAge[age]=[];
-          }
-          caseByAge[age].push({date:record.date,rollingRate});
-        })
-      })
+      const ageRanges=Object.keys(casesByAge).filter(a => !agesToFilterOut.includes(a));
 
-      const ageRanges=Object.keys(caseByAge).filter(a => a !== "unassigned");
-
-      return {...state, caseByAge, ageRanges};
+      return {...state, casesByAge, ageRanges};
     }
   }
 })
 
-export const selectCasesByAge = state => get(state, "cases.caseByAge", {});
+export const selectCasesByAge = state => get(state, "cases.casesByAge", {});
 export const selectAgeRanges = state => get(state, "cases.ageRanges", []);
 
 export default casesSlice.reducer;

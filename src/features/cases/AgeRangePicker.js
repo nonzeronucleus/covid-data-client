@@ -70,6 +70,8 @@ export const AgeRangePicker = () => {
     const chosenRanges = useSelector(selectedRanges);
     const dispatch = useDispatch();
 
+    console.log({chosenRanges})
+
     // if (ageRanges.length === 0 || colours.length === 0) {
     //     return null;
     // }
