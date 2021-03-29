@@ -36,9 +36,6 @@ const NewRangeSelector = () => {
     const { register, handleSubmit } = useForm();
     const dispatch = useDispatch();
 
-    // if (ageRanges.length === 0 || colours.length === 0) {
-    //     return null;
-    // }
     const onAdd = data => {
         dispatch(addRange(data));
     }
@@ -69,12 +66,6 @@ const NewRangeSelector = () => {
 export const AgeRangePicker = () => {
     const chosenRanges = useSelector(selectedRanges);
     const dispatch = useDispatch();
-
-    console.log({chosenRanges})
-
-    // if (ageRanges.length === 0 || colours.length === 0) {
-    //     return null;
-    // }
 
     const handleRemove = range => {
         dispatch(removeRange(range));
