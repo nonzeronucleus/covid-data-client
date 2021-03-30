@@ -75,7 +75,7 @@ export const AgeRangePicker = () => {
         <>
             <NewRangeSelector />
             {chosenRanges.map((range, i) =>(
-                    <div key={i}><span>{range.ageRange}</span>-<span>{range.colour}</span><button onClick={() => handleRemove(range)}>-</button></div>
+                <div key={i}><span>{range.ageRange}</span>-<span>{range.colour}</span><button onClick={() => handleRemove(range)}>-</button></div>
             ))}
         </>
     )

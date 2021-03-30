@@ -8,7 +8,7 @@ const agesToFilterOut = ["unassigned", "60+", "00_59"]
 
 const selectedRangesSlice = createSlice({
   name: 'chosenRanges',
-  initialState: {selectedRanges:[], ranges:[], tranges:{}},
+  initialState: {ranges:[]},
   reducers: {
     addRange(state, action) {
       const range = action.payload;
@@ -27,6 +27,12 @@ const selectedRangesSlice = createSlice({
       console.log(ageRange)
 
       state.ranges[ageRange].isSelected = !state.ranges[ageRange].isSelected;
+    },
+    changeColour(state, action) {
+      const {ageRange, colour} = action.payload;
+
+      state.ranges[ageRange].colour = colour;
+
     }
 
   },
@@ -44,7 +50,7 @@ const selectedRangesSlice = createSlice({
   }
 })
 
-export const { addRange, removeRange, toggleRange } = selectedRangesSlice.actions;
+export const { addRange, removeRange, toggleRange, changeColour } = selectedRangesSlice.actions;
 
 export const selectedRanges = state => getRanges(state).filter(({isSelected}) => isSelected);
 

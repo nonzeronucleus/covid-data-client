@@ -1,14 +1,14 @@
 import React from 'react';
 import Chart from './features/cases/Chart';
 import AgeRangeList from './features/cases/AgeRangeList';
-import AgeRangePicker from './features/cases/AgeRangePicker';
+// import AgeRangePicker from './features/cases/AgeRangePicker';
 import styled from 'styled-components';
 
 
 const StyledApp = styled.div`
   text-align: center;
   display: grid;
-  grid-template-columns: 200px auto 200px;
+  grid-template-columns: 20px auto 300px;
   grid-template-rows: 100px auto 100px;
   grid-template-areas:
    "header header header"
@@ -34,9 +34,9 @@ function App() {
             <Tile location="selection">
                 <AgeRangeList/>
             </Tile>
-            <Tile location="picker">
+            {/* <Tile location="picker">
                 <AgeRangePicker/>
-            </Tile>
+            </Tile> */}
         </StyledApp>
     )
 }

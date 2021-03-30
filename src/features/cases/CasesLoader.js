@@ -2,7 +2,7 @@ import React from 'react';
 import {  useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { fetchCasesByArea } from '../cases/CasesSlice';
+import { fetchCasesByArea } from './CovidSlice';
 
 const Row = styled.div`
   display: flex;
