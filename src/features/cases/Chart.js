@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from 'react-redux';
 import { get } from 'lodash'
-import { selectCasesByAge } from './CasesSlice';
+import { selectByAge } from './SourceSlice';
 import { selectedRanges} from './ChosenRangesSlice';
 // import useDimensions from "react-use-dimensions";
 import styled from 'styled-components';
@@ -127,7 +127,7 @@ export default function Chart() {
   const chartRef = useRef();
   const dimensions = useResizeObserver(chartRef);
   // const [ref, { x, y, width,height }] = useDimensions();
-  const casesByAge = useSelector(selectCasesByAge);
+  const casesByAge = useSelector(selectByAge);
   const ranges = useSelector(selectedRanges);
 
   useEffect(() => {

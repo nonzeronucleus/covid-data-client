@@ -5,8 +5,10 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { fetchCasesByArea } from './features/cases/fetchCasesByArea';
+import { fetchDeathsByArea } from './features/cases/fetchDeathsByArea';
 
 store.dispatch(fetchCasesByArea());
+store.dispatch(fetchDeathsByArea());
 
 ReactDOM.render(
   <React.StrictMode>

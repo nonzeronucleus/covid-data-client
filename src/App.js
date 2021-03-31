@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from './features/cases/Chart';
 import AgeRangeList from './features/cases/AgeRangeList';
-// import AgeRangePicker from './features/cases/AgeRangePicker';
+import {SourceToggle} from './features/cases/SourceToggle';
 import styled from 'styled-components';
 
 
@@ -11,7 +11,7 @@ const StyledApp = styled.div`
   grid-template-columns: 20px auto 300px;
   grid-template-rows: 100px auto 100px;
   grid-template-areas:
-   "header header header"
+   "header header toggle"
    "picker chart selection";
    ". footer footer"
   width:100%;
@@ -28,6 +28,9 @@ const Tile = styled.div`
 function App() {
     return (
         <StyledApp>
+            <Tile location="toggle">
+                <SourceToggle />
+            </Tile>
             <Tile location="chart">
                 <Chart/>
             </Tile>

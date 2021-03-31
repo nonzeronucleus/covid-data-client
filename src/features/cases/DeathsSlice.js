@@ -1,29 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { get } from 'lodash'
-import { fetchCasesByArea } from './fetchCasesByArea';
+import { fetchDeathsByArea } from './fetchDeathsByArea';
 
 // const casesText = 'newCasesBySpecimenDateAgeDemographics';
 // const casesText = 'newDeaths28DaysByDeathDateAgeDemographics';
 
-const agesToFilterOut = ["unassigned", "60+", "00_59"]
-
-const casesSlice = createSlice({
-  name: 'cases',
+const deathsSlice = createSlice({
+  name: 'deaths',
   initialState: {loading: 'idle' },
   reducers: {
   },
   extraReducers: {
-    [fetchCasesByArea.fulfilled]: (state, action) => {
-      let {casesByAge} = get(action,'payload')
+    [fetchDeathsByArea.fulfilled]: (state, action) => {
+      let {deathsByAge} = get(action,'payload')
 
-      const ageRanges=Object.keys(casesByAge).filter(a => !agesToFilterOut.includes(a));
-
-      return {...state, casesByAge, ageRanges};
+      return {...state, deathsByAge};
     }
   }
 })
 
-export const selectCasesByAge = state => get(state, "cases.casesByAge", {});
-export const selectAgeRanges = state => get(state, "cases.ageRanges", []);
+export const selectDeathsByAge = state => get(state, "deaths.deathsByAge", {});
 
-export default casesSlice.reducer;
+// export default deathsSlice.reducer;
+export const deaths = deathsSlice.reducer;
