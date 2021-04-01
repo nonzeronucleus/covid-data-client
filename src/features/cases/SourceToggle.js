@@ -3,12 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSource, getSource} from './SourceSlice';
 
 export const SourceToggle = () => {
-    // const [source, setSource] = useState("cases");
     const source = useSelector(getSource)
     const dispatch = useDispatch();
 
 
-    const handleChange = (e) => dispatch(setSource(e.target.value));  //setSource(e.target.value);
+    const handleChange = (e) => dispatch(setSource(e.target.value));
 
     return(
         <div >

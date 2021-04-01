@@ -3,9 +3,7 @@ import { useSelector } from 'react-redux';
 import { get } from 'lodash'
 import { selectByAge } from './SourceSlice';
 import { selectedRanges} from './ChosenRangesSlice';
-// import useDimensions from "react-use-dimensions";
 import styled from 'styled-components';
-// import ResizeObserver from "resize-observer-polyfill";
 
 import * as d3 from "d3";
 import "d3-time-format";
@@ -67,11 +65,7 @@ const createGraph = async (casesByAge, ranges, dimensions) => {
   svg.selectAll("path").remove()
   svg.selectAll("g").remove()
 
-  // console.log(dimensions)
-
   if(!dimensions) return null;
-
-
 
   const margin = { top: 20, right: 20, bottom: 50, left: 70 },
     width = dimensions.width - margin.left - margin.right,
@@ -126,19 +120,12 @@ const StyledSVG = styled.svg`
 export default function Chart() {
   const chartRef = useRef();
   const dimensions = useResizeObserver(chartRef);
-  // const [ref, { x, y, width,height }] = useDimensions();
   const casesByAge = useSelector(selectByAge);
   const ranges = useSelector(selectedRanges);
 
   useEffect(() => {
     createGraph(casesByAge, ranges, dimensions);
   }, [casesByAge, ranges, dimensions]);
-
-
-
-  // if (ranges.length === 0) {
-  //   return null;
-  // }
 
   return (
     <StyledChart ref={chartRef}>

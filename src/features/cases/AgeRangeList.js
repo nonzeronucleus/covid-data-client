@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -18,22 +18,24 @@ const RangeList = styled.ul`
 
 
 const RangeRow = ({ageRange, isSelected, colour}) => {
+    const [selectedColour, setSelectedColour] = useState(colour)
     const dispatch = useDispatch();
     const { register } = useForm();
 
 
     const handleToggle = (ageRange) => dispatch(toggleRange(ageRange))
     const handleColourChange = (e) => {
-        const colour = e.target.value;
+        const newColour = e.target.value;
+        setSelectedColour(newColour)
 
-        dispatch(changeColour({ageRange, colour}))
+        dispatch(changeColour({ageRange, colour:newColour}))
     }
 
 
     return <form>
         <input  type="checkbox" name="selected" checked={isSelected} ref={register} onChange={() => handleToggle(ageRange)}/>
             <span>{ageRange.replace("_","-")}
-            <select name="colour" ref={register} value={colour} onChange={handleColourChange}>
+            <select name="colour" ref={register} value={selectedColour} onChange={handleColourChange}>
                 {
                     allColours.map(c => <option key={c} value={c}>{c}</option>)
                 }
