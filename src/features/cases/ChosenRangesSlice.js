@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchCasesByArea } from './fetchCasesByArea';
-import { get } from 'lodash'
 
 import allColours from './allColours'
 
@@ -24,8 +23,6 @@ const selectedRangesSlice = createSlice({
     toggleRange(state,action) {
       const ageRange = action.payload;
 
-      console.log(ageRange)
-
       state.ranges[ageRange].isSelected = !state.ranges[ageRange].isSelected;
     },
     changeColour(state, action) {
@@ -38,12 +35,13 @@ const selectedRangesSlice = createSlice({
   },
   extraReducers: {
     [fetchCasesByArea.fulfilled]: (state, action) => {
-      const { casesByAge } = get(action, 'payload')
-      const ageRanges = Object.keys(casesByAge).filter(a => !agesToFilterOut.includes(a));
+      const {covidData} = action.payload;
 
-      const ranges = ageRanges.reduce((acc, range, i) => {
-        return {...acc, [range]:{colour:allColours[i], isSelected: false}}
-      },{})
+      const ranges = covidData[0].data
+        .filter(({age}) => !agesToFilterOut.includes(age))
+        .reduce((acc, {age}, i) => (
+          {...acc, [age]:{colour:allColours[i], isSelected: false}}
+        ), {})
 
       return { ...state, ranges };
     }

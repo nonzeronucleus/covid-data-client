@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from 'react-redux';
-import { get } from 'lodash'
-import { selectByAge } from './SourceSlice';
 import { selectedRanges} from './ChosenRangesSlice';
 import styled from 'styled-components';
+import { selectDataByAgeRanges } from './SourceSlice';
 
 import * as d3 from "d3";
 import "d3-time-format";
@@ -29,7 +28,10 @@ const useResizeObserver = (ref) => {
 };
 
 
-const drawDataSet = async (graph, x, y, maxRate, amountToDisplay, colour) => {
+const drawDataSet = async (graph, x, y, maxRate, covidData) => {
+  const amountToDisplay =  covidData.rates;
+  console.log(covidData)
+  const colour = covidData.colour;
   const valueLine = d3.line()
     .x((d) => { return x(parseTime(d.date)); })
     .y((d) => { return y(d.rollingRate); });
@@ -47,23 +49,11 @@ const drawDataSet = async (graph, x, y, maxRate, amountToDisplay, colour) => {
 }
 
 
-
-const getMaxRate = (casesByAge, ranges) =>
-  d3.max(ranges,
-    (r) => {
-      return d3.max(casesByAge[r.ageRange],
-        (r) => {return r.rollingRate}
-      )
-    }
-  );
-
-
-
-const createGraph = async (casesByAge, ranges, dimensions) => {
-  const maxRate = getMaxRate(casesByAge, ranges)
+const createGraph = async (dimensions, chartData) => {
   const svg = d3.select("svg")
   svg.selectAll("path").remove()
   svg.selectAll("g").remove()
+  const maxRate = d3.max(chartData, r=> r.max)
 
   if(!dimensions) return null;
 
@@ -80,9 +70,9 @@ const createGraph = async (casesByAge, ranges, dimensions) => {
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  ranges.forEach(range => {
-    const amountToDisplay = get(casesByAge, range.ageRange, []);
-    drawDataSet(graph, x, y, maxRate, amountToDisplay, range.colour)
+  chartData.forEach(dataSet => {
+    console.log({dataSet})
+    drawDataSet(graph, x, y, maxRate, dataSet)
   })
 
   graph.append("g")
@@ -120,12 +110,13 @@ const StyledSVG = styled.svg`
 export default function Chart() {
   const chartRef = useRef();
   const dimensions = useResizeObserver(chartRef);
-  const casesByAge = useSelector(selectByAge);
   const ranges = useSelector(selectedRanges);
 
+  const chartData = useSelector(state => selectDataByAgeRanges(state, ranges));
+
   useEffect(() => {
-    createGraph(casesByAge, ranges, dimensions);
-  }, [casesByAge, ranges, dimensions]);
+    createGraph(dimensions, chartData);
+  }, [ranges, dimensions, chartData]);
 
   return (
     <StyledChart ref={chartRef}>

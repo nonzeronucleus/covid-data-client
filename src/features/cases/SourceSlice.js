@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { selectCasesByAge } from './CasesSlice';
-import { selectDeathsByAge } from './DeathsSlice';
+import sourceType from './sourceType';
 
 const sourceSlice = createSlice({
   name: 'source',
@@ -15,10 +14,29 @@ const sourceSlice = createSlice({
 export const { setSource } = sourceSlice.actions;
 export const getSource = state => state.source;
 
-export const selectByAge = state => state.source === "deaths" ? selectDeathsByAge(state) : selectCasesByAge(state);
+export const selectDataByAgeRange = ({source, deaths, cases}, range) => {
+  const {covidData} = sourceType.deaths === source ? deaths : cases;
+
+  const rates = covidData
+    .map(dataByDate => ({
+      date:dataByDate.date,
+      rollingRate:dataByDate.data
+        .filter(({age}) => age === range.ageRange)[0].rollingRate
+    })
+  );
+
+  const max = rates.reduce((m, rate) => Math.max(m,rate.rollingRate), 0);
+
+  return {
+    ageRange:range.ageRange,
+    colour:range.colour,
+    rates,
+    max
+  }
+}
 
 
-// export const selectedRanges = state => getRanges(state).filter(({isSelected}) => isSelected);
-
+export const selectDataByAgeRanges = (state, ranges) =>
+  ranges.map(range => selectDataByAgeRange(state, range))
 
 export const source = sourceSlice.reducer;
