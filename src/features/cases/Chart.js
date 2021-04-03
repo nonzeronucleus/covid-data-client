@@ -30,7 +30,6 @@ const useResizeObserver = (ref) => {
 
 const drawDataSet = async (graph, x, y, maxRate, covidData) => {
   const amountToDisplay =  covidData.rates;
-  console.log(covidData)
   const colour = covidData.colour;
   const valueLine = d3.line()
     .x((d) => { return x(parseTime(d.date)); })
@@ -71,7 +70,6 @@ const createGraph = async (dimensions, chartData) => {
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
   chartData.forEach(dataSet => {
-    console.log({dataSet})
     drawDataSet(graph, x, y, maxRate, dataSet)
   })
 

@@ -1,7 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getByArea } from './deathsAPI';
-import { get } from 'lodash'
-
 
 export const fetchDeathsByArea = createAsyncThunk(
   'users/fetchDeathsByArea',

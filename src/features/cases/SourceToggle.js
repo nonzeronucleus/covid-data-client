@@ -14,7 +14,6 @@ const SourceInput = ({value}) => {
 }
 
 export const SourceToggle = () => {
-
     return(
         <div >
             <SourceInput value = {sourceType.cases} />
