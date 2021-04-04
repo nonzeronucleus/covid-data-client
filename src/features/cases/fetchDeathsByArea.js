@@ -10,7 +10,7 @@ export const fetchDeathsByArea = createAsyncThunk(
 
     const covidData = records
       .map(({date,newDeaths28DaysByDeathDateAgeDemographics }) =>
-      ({date, data:newDeaths28DaysByDeathDateAgeDemographics}))
+      ({date, covidNumbersByAge:newDeaths28DaysByDeathDateAgeDemographics}))
 
     return {covidData};
   }

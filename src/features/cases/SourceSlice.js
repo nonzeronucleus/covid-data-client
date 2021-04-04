@@ -20,7 +20,7 @@ export const selectDataByAgeRange = ({source, deaths, cases}, range) => {
   const rates = covidData
     .map(dataByDate => ({
       date:dataByDate.date,
-      rollingRate:dataByDate.data
+      rollingRate:dataByDate.covidNumbersByAge
         .filter(({age}) => age === range.ageRange)[0].rollingRate
     })
   );

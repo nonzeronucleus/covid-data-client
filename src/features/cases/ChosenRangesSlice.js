@@ -37,7 +37,7 @@ const selectedRangesSlice = createSlice({
     [fetchCasesByArea.fulfilled]: (state, action) => {
       const {covidData} = action.payload;
 
-      const ranges = covidData[0].data
+      const ranges = covidData[0].covidNumbersByAge
         .filter(({age}) => !agesToFilterOut.includes(age))
         .reduce((acc, {age}, i) => (
           {...acc, [age]:{colour:allColours[i], isSelected: false}}
