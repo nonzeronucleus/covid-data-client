@@ -51,13 +51,13 @@ const testData = [
 export default function Chart() {
     // const chartRef = useRef();
     // const dimensions = useResizeObserver(chartRef);
-    // const chartData = useSelector(getSelectedData);
+    const chartData = useSelector(getSelectedData);
     // const data2 = chartData
     //     .map(({ageRange, colour, data}) => {
 
     //     })
 
-    // console.log(chartData)
+    console.log(chartData)
 
     return (
         <ResponsiveContainer>

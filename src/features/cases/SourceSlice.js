@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import sourceType from './sourceType';
+import { selectedRanges} from './ChosenRangesSlice';
 
 const sourceSlice = createSlice({
   name: 'source',
@@ -38,5 +39,13 @@ export const selectDataByAgeRange = ({source, deaths, cases}, range) => {
 
 export const selectDataByAgeRanges = (state, ranges) =>
   ranges.map(range => selectDataByAgeRange(state, range))
+
+export const getSelectedData = state => {
+  const ranges = selectedRanges(state);
+
+  return selectDataByAgeRanges(state, ranges);
+}
+
+
 
 export const source = sourceSlice.reducer;

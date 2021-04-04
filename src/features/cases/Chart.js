@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from 'react-redux';
-import { selectedRanges} from './ChosenRangesSlice';
 import styled from 'styled-components';
-import { selectDataByAgeRanges } from './SourceSlice';
+import { getSelectedData } from './SourceSlice';
 
 import * as d3 from "d3";
 import "d3-time-format";
@@ -108,13 +107,11 @@ const StyledSVG = styled.svg`
 export default function Chart() {
   const chartRef = useRef();
   const dimensions = useResizeObserver(chartRef);
-  const ranges = useSelector(selectedRanges);
-
-  const chartData = useSelector(state => selectDataByAgeRanges(state, ranges));
+  const chartData = useSelector(getSelectedData);
 
   useEffect(() => {
     createGraph(dimensions, chartData);
-  }, [ranges, dimensions, chartData]);
+  }, [dimensions, chartData]);
 
   return (
     <StyledChart ref={chartRef}>
