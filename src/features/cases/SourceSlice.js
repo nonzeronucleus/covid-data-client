@@ -36,6 +36,7 @@ export const selectDataByAgeRange = ({source, deaths, cases}, range) => {
   }
 }
 
+export const getAllCovidData = ({source, deaths, cases}) => sourceType.deaths === source ? deaths.covidData : cases.covidData;
 
 export const selectDataByAgeRanges = (state, ranges) =>
   ranges.map(range => selectDataByAgeRange(state, range))
