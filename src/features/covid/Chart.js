@@ -15,7 +15,7 @@ export default function Chart() {
         }).reverse();
 
     return (
-        <ResponsiveContainer>
+        <ResponsiveContainer  width="99%">
             <LineChart width={730} height={250} data={data2}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
