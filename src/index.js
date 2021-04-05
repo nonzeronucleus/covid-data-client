@@ -4,11 +4,11 @@ import App from './App';
 import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import { fetchCasesByArea } from './features/cases/fetchCasesByArea';
-import { fetchDeathsByArea } from './features/cases/fetchDeathsByArea';
+import { fetchCasesByAgeRange } from './features/cases/fetchCasesByAgeRange';
+import { fetchDeathsByAgeRange } from './features/cases/fetchDeathsByAgeRange';
 
-store.dispatch(fetchCasesByArea());
-store.dispatch(fetchDeathsByArea());
+store.dispatch(fetchCasesByAgeRange());
+store.dispatch(fetchDeathsByAgeRange());
 
 ReactDOM.render(
   <React.StrictMode>

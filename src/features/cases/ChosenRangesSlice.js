@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchCasesByArea } from './fetchCasesByArea';
+import { fetchCasesByAgeRange } from './fetchCasesByAgeRange';
 
 import allColours from './allColours'
 
@@ -34,7 +34,7 @@ const selectedRangesSlice = createSlice({
 
   },
   extraReducers: {
-    [fetchCasesByArea.fulfilled]: (state, action) => {
+    [fetchCasesByAgeRange.fulfilled]: (state, action) => {
       const {covidData} = action.payload;
 
       const ranges = covidData[0].covidNumbersByAge

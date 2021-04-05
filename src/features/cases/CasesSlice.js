@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { get } from 'lodash'
-import { fetchCasesByArea } from './fetchCasesByArea';
+import { fetchCasesByAgeRange } from './fetchCasesByAgeRange';
 
 const casesSlice = createSlice({
   name: 'cases',
@@ -8,7 +8,7 @@ const casesSlice = createSlice({
   reducers: {
   },
   extraReducers: {
-    [fetchCasesByArea.fulfilled]: (state, action) => {
+    [fetchCasesByAgeRange.fulfilled]: (state, action) => {
       let {covidData} = get(action,'payload')
 
       return {...state, covidData};
