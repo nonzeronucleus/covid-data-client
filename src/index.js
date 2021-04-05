@@ -4,8 +4,8 @@ import App from './App';
 import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import { fetchCasesByAgeRange } from './features/cases/fetchCasesByAgeRange';
-import { fetchDeathsByAgeRange } from './features/cases/fetchDeathsByAgeRange';
+import { fetchCasesByAgeRange } from './features/covid/fetchCasesByAgeRange';
+import { fetchDeathsByAgeRange } from './features/covid/fetchDeathsByAgeRange';
 
 store.dispatch(fetchCasesByAgeRange());
 store.dispatch(fetchDeathsByAgeRange());

@@ -1,9 +1,9 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
-import casesReducer from '../features/cases/CasesSlice';
-import {chosenRanges} from '../features/cases/ChosenRangesSlice'
-import {deaths} from '../features/cases/DeathsSlice';
-import {source} from '../features/cases/SourceSlice';
+import casesReducer from '../features/covid/CasesSlice';
+import {chosenRanges} from '../features/covid/ChosenRangesSlice'
+import {deaths} from '../features/covid/DeathsSlice';
+import {source} from '../features/covid/SourceSlice';
 
 export default configureStore({
   reducer: {
