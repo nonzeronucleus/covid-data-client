@@ -10,20 +10,19 @@ const covidDataSlice = createSlice({
   },
   extraReducers: {
     [fetchCasesByAgeRange.fulfilled]: (state, action) => {
-      let {covidData} = get(action,'payload')
+      let {cases} = get(action,'payload')
 
-      return {...state, cases:covidData};
+      return {...state, cases};
     },
     [fetchDeathsByAgeRange.fulfilled]: (state, action) => {
-      let {covidData} = get(action,'payload')
+      let {deaths} = get(action,'payload')
 
-      return {...state, deaths:covidData};
+      return {...state, deaths};
     }
   }
 })
 
-// export const selectDeathsByAge = state => get(state, "deaths.deathsByAge", {});
-
-// export const selectMaxByAge = state => get(state,"deaths.maxByAge", 0);
+export const getCases = state => get(state, "covidData.cases", []);
+export const getDeaths = state => get(state, "covidData.deaths", []);
 
 export const covidData = covidDataSlice.reducer;

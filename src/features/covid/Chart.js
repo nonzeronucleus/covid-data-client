@@ -6,7 +6,6 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 export default function Chart() {
     const ranges = useSelector(selectedRanges);
-
     const chartData = useSelector(getAllCovidData);
     const data2 = chartData
         .map(({date, covidNumbersByAge}) => {

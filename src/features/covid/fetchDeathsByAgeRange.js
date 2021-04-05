@@ -4,8 +4,8 @@ import { getDeathsByAgeRange } from './covidAPI';
 export const fetchDeathsByAgeRange = createAsyncThunk(
   'covid/fetchDeathsByAgeRange',
   async () => {
-    const covidData = await getDeathsByAgeRange();
+    const deaths = await getDeathsByAgeRange();
 
-    return {covidData};
+    return {deaths};
   }
 );
