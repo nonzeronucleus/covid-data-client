@@ -1,5 +1,5 @@
 import React from 'react';
-import Chart from './features/covid/Chart2';
+import Chart from './features/covid/Chart';
 import AgeRangeList from './features/covid/AgeRangeList';
 import {SourceToggle} from './features/covid/SourceToggle';
 import styled from 'styled-components';
