@@ -10,6 +10,7 @@ const RangeList = styled.ul`
     align:left;
     list-style-type: none;
     padding:0px;
+    font-size: 22px;
 
     > li {
         text-align:center;
@@ -18,7 +19,7 @@ const RangeList = styled.ul`
         padding-left: 35px;
         margin-bottom: 8px;
         cursor: pointer;
-        font-size: 18px;
+
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -38,9 +39,9 @@ const CheckBox = styled.label`
         padding-left:35px;
         width:60px;
 
-        &:checked + span {
-            // background-color:green;
-        }
+        // &:checked + span {
+        //     // background-color:green;
+        // }
     }
     > span {
         position: absolute;
@@ -54,6 +55,10 @@ const CheckBox = styled.label`
             position: absolute;
             display: none;
         }
+        svg {
+            width:40px;
+            height:40px;
+        }
     }
 `;
 
@@ -61,14 +66,17 @@ const CheckBox = styled.label`
 const AgeRangeSelection = styled.span`
     display:inline-block;
     width:60px;
+    border-width:4px;
+    border-color:red;
 `;
 
 const ColourSelection = styled.span`
+    padding-left:10px;
     display:inline-block;
     width:120px;
-    font-size: 18px;
+    // font-size: 18px;
     > select {
-        font-size: 18px;
+        font-size: 22px;
     }
 `;
 
