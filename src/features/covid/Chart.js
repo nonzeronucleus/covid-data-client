@@ -4,6 +4,7 @@ import { getAllCovidData } from './SourceSlice';
 import { selectedRanges } from './ChosenRangesSlice'
 import { format } from "date-fns";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { isAllLoaded } from './LoadingSlice';
 
 
 const dateFormatter = date => {
@@ -24,6 +25,13 @@ export default function Chart() {
                 return {...acc, date, [covidNumbers.age]:covidNumbers.rollingRate}
             }, {})
         }).reverse();
+
+    const isLoaded = useSelector(isAllLoaded);
+
+    if (!isLoaded) {
+        return <h2>Loading</h2>
+    }
+
 
     return (
         <ResponsiveContainer  width="99%">
