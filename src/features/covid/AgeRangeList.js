@@ -4,22 +4,19 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import {toggleRange, getRanges, changeColour} from './ChosenRangesSlice';
 import allColours from './allColours';
-// import Checkbox from './Checkbox'
 
-// const StyledRow = styled.div`
-// `;
 
 const RangeList = styled.ul`
     align:left;
     list-style-type: none;
-    padding:20px;
+    padding:0px;
 
     > li {
         text-align:center;
         display: block;
         position: relative;
         padding-left: 35px;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
         cursor: pointer;
         font-size: 18px;
         -webkit-user-select: none;
@@ -29,41 +26,37 @@ const RangeList = styled.ul`
         > form {
             text-align:left;
         }
-        label {
-            // background-color: red;
+`;
 
-            > input {
-                position: absolute;
-                opacity: 0;
-                cursor: pointer;
-                height: 0;
-                width: 0;
-                padding-left:35px;
-                width:60px;
+const CheckBox = styled.label`
+    > input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+        padding-left:35px;
+        width:60px;
 
-                &:checked + span {
-                    // background-color:green;
-                }
-            }
-            > span {
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 25px;
-                width: 25px;
-                background-color: #eee;
-                // background-color:pink;
-                :after {
-                    content: "";
-                    position: absolute;
-                    display: none;
-                }
-
-            }
+        &:checked + span {
+            // background-color:green;
         }
     }
-    padding:0px;
+    > span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        :after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+    }
 `;
+
 
 const AgeRangeSelection = styled.span`
     display:inline-block;
@@ -101,10 +94,10 @@ const RangeRow = ({ageRange, isSelected, colour}) => {
 
     return <form>
         <AgeRangeSelection>
-            <label>{ageRange.replace("_","-")}
+            <CheckBox>{ageRange.replace("_","-")}
                 <input  type="checkbox" name="selected" checked={isSelected} ref={register} onChange={() => handleToggle(ageRange)}/>
                 <span>{isSelected && <Tick />}</span>
-            </label>
+            </CheckBox>
         </AgeRangeSelection>
         <ColourSelection>
             <select name="colour" ref={register} value={selectedColour} onChange={handleColourChange}>
@@ -113,7 +106,6 @@ const RangeRow = ({ageRange, isSelected, colour}) => {
                 }
             </select>
         </ColourSelection>
-
     </form>
 }
 

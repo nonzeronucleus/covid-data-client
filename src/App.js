@@ -8,16 +8,25 @@ import styled from 'styled-components';
 const StyledApp = styled.div`
   text-align: center;
   display: grid;
-  grid-template-columns: ${props => props.menuOpen ? "300px": "100px"} auto 300px 10px;
-  grid-template-rows: 100px auto 100px;
+  grid-template-columns: 300px auto;
+  grid-template-rows: 60px auto;
   grid-template-areas:
-   "header header toggle right"
-   "drawer chart chart right";
-   "drawer footer footer right"
-  width:100%;
-  height:100%;
-  background-color:lightgray;
+   "header toggle"
+   "drawer chart";
+  width:99%;
+  height:90%;
   padding:0px;
+  border-width:20px;
+  border-radius:20px;
+
+  div:first-child {
+    border-top-left-radius: 5px;
+  }
+
+  div:last-child {
+    border-bottom-right-radius: 10px;
+  }
+}
 `;
 
 const Tile = styled.div`
@@ -26,8 +35,17 @@ const Tile = styled.div`
   font-family:'Roboto';
   font-size:'x-large';
   padding:10px;
+  margin:4px;
+  border-width:4px;
+  border-radius:4px;
+
     // border-wid
     // margin:10px;
+`;
+
+const Title = styled.h1`
+    margin:0px;
+    color:floralwhite;
 `;
 
 
@@ -36,21 +54,20 @@ const Tile = styled.div`
 function App() {
     return (
         <StyledApp menuOpen={true}>
+            {/* hello */}
             <Tile location="header" color="lightslategray">
-                <h1>UK Covid Data</h1>
+                <Title>UK Covid Data</Title>
             </Tile>
             <Tile location="drawer"  color="cadetblue">
                 <AgeRangeList/>
             </Tile>
-            <Tile location="toggle" color="cadetblue">
+            <Tile location="toggle" color="lightslategray">
                 <SourceToggle />
             </Tile>
             <Tile location="chart">
                 <Chart/>
             </Tile>
-            <Tile location="selection">
 
-            </Tile>
         </StyledApp>
     )
 }
