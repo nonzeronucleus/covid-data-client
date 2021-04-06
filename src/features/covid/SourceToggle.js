@@ -63,6 +63,10 @@ const Radio = styled.label`
     padding-right:40px;
 `;
 
+const Toggle = styled.div`
+    margin:9px;
+`;
+
 
 
 const SourceInput = ({value}) => {
@@ -79,10 +83,10 @@ const SourceInput = ({value}) => {
 
 export const SourceToggle = () => {
     return(
-        <div >
+        <Toggle >
             <SourceInput value = {sourceType.cases} />
             <SourceInput value = {sourceType.deaths} />
-        </div>)
+        </Toggle>)
 }
 
 

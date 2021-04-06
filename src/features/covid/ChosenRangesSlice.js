@@ -3,7 +3,7 @@ import { fetchCasesByAgeRange } from './fetchCasesByAgeRange';
 
 import allColours from './allColours'
 
-const agesToFilterOut = ["unassigned", "60+", "00_59"]
+const agesToFilterOut = ["unassigned", "60+", "00-59"]
 
 const selectedRangesSlice = createSlice({
   name: 'chosenRanges',

@@ -9,7 +9,7 @@ import CovidMenu from './features/covid/CovidMenu'
 const StyledApp = styled.div`
   text-align: center;
   display: grid;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 320px auto;
   grid-template-rows: 60px 60px auto 60px;
   grid-template-areas:
    "header chart"

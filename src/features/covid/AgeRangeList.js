@@ -17,7 +17,7 @@ const RangeList = styled.ul`
         display: block;
         position: relative;
         padding-left: 35px;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
         cursor: pointer;
 
         -webkit-user-select: none;
@@ -73,16 +73,25 @@ const AgeRangeSelection = styled.span`
 const ColourSelection = styled.span`
     padding-left:10px;
     display:inline-block;
-    width:120px;
+    width:160px;
     // font-size: 18px;
     > select {
         font-size: 22px;
+        // color:${props => props.colour}
     }
+`;
+
+const ColourOption = styled.option`
+
 `;
 
 
 const Tick = () => <svg>
     <path xmlns="http://www.w3.org/2000/svg" d="M0 11c2.761.575 6.312 1.688 9 3.438 3.157-4.23 8.828-8.187 15-11.438-5.861 5.775-10.711 12.328-14 18.917-2.651-3.766-5.547-7.271-10-10.917z"/>
+</svg>
+
+const ColourCircle = ({colour}) => <svg height="20" width="20">
+    <circle cx="10" cy="10" r="6" stroke="black" strokeWidth="0" fill={colour} />
 </svg>
 
 const RangeRow = ({ageRange, isSelected, colour}) => {
@@ -107,13 +116,17 @@ const RangeRow = ({ageRange, isSelected, colour}) => {
                 <span>{isSelected && <Tick />}</span>
             </CheckBox>
         </AgeRangeSelection>
-        <ColourSelection>
+        <ColourSelection colour = {selectedColour} >
             <select name="colour" ref={register} value={selectedColour} onChange={handleColourChange}>
                 {
-                    allColours.map(c => <option key={c} value={c}>{c}</option>)
+                    allColours.map(c => <ColourOption colour={c} key={c} value={c}>{c}</ColourOption>)
                 }
+
             </select>
         </ColourSelection>
+        <span>
+            <ColourCircle colour={selectedColour}/>
+        </span>
     </form>
 }
 

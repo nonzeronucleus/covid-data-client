@@ -2,7 +2,7 @@ const allColours = [
     "aqua", "blue",
     "navy", "purple",
     "olive", "green",
-    "lime", "yellow",
+    "lime", "darkviolet",
     "fuchsia", "red",
     "maroon", "orange",
     "teal", "grey",
