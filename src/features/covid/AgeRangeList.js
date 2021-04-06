@@ -27,6 +27,7 @@ const RangeList = styled.ul`
         > form {
             text-align:left;
         }
+    }
 `;
 
 const CheckBox = styled.label`
@@ -77,6 +78,7 @@ const ColourSelection = styled.span`
     // font-size: 18px;
     > select {
         font-size: 22px;
+        border-radius:8px;
         // color:${props => props.colour}
     }
 `;
@@ -91,7 +93,7 @@ const Tick = () => <svg>
 </svg>
 
 const ColourCircle = ({colour}) => <svg height="20" width="20">
-    <circle cx="10" cy="10" r="6" stroke="black" strokeWidth="0" fill={colour} />
+    <circle cx="10" cy="10" r="6" stroke="black" strokeWidth="1" fill={colour} />
 </svg>
 
 const RangeRow = ({ageRange, isSelected, colour}) => {

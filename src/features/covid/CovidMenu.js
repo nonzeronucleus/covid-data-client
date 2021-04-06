@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const Menu = styled.div`
     padding-top:20px;
+    color:blanchedalmond;
 `;
 
 
