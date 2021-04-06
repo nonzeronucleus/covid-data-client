@@ -14,7 +14,11 @@ const getByAgeRange = (dataType)  => {
     .then(({ data }) => {
         const covidData = data.data
             .map((record) => {
-                return ({date:record.date, covidNumbersByAge:record[dataType.dataLabel]})
+                return ({
+                    date:new Date(record.date),
+                    covidNumbersByAge:record[dataType.dataLabel]
+                        .map(({age, cases, rollingRate, rollingSum}) => {return {age:age.replace('_','-'), cases, rollingRate, rollingSum}} )
+                })
             })
         return covidData;
      });
