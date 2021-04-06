@@ -16,7 +16,7 @@ function CovidMenu() {
     const isLoaded = useSelector(isAllLoaded);
 
     if (!isLoaded) {
-        return <h2>Loading</h2>
+        return null
     }
 
     return (
