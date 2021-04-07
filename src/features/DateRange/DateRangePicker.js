@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import { useSelector } from 'react-redux';
-import { getAllCovidData } from './SourceSlice';
+import { getAllCovidData } from '../Sources/SourceSlice';
 import { format, isFirstDayOfMonth } from "date-fns";
 import {debounce} from 'lodash';
 

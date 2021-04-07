@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getCases, getDeaths, getNumDaysForCases, getNumDaysForDeaths } from './CovidDataSlice';
+import { getCases, getDeaths, getNumDaysForCases, getNumDaysForDeaths } from '../covid/CovidDataSlice';
 import sourceType from './sourceType';
 
 const sourceSlice = createSlice({

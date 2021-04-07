@@ -1,8 +1,8 @@
 import React from 'react';
-import AgeRangeList from './AgeRangeList';
-import {SourceToggle} from './SourceToggle';
+import AgeRangeList from '../AgeRanges/AgeRangeList';
+import {SourceToggle} from '../Sources/SourceToggle';
 import { useSelector } from 'react-redux';
-import { isAllLoaded } from './LoadingSlice';
+import { isAllLoaded } from '../Loading/LoadingSlice';
 
 import styled from 'styled-components';
 

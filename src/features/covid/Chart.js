@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from 'react-redux';
-import { getAllCovidData } from './SourceSlice';
-import { selectedAgeRanges } from './ChosenAgeRangesSlice'
+import { getAllCovidData } from '../Sources/SourceSlice';
+import { selectedAgeRanges } from '../AgeRanges/ChosenAgeRangesSlice'
 import { format } from "date-fns";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { isAllLoaded } from './LoadingSlice';
+import { isAllLoaded } from '../Loading/LoadingSlice';
 
 
 const dateFormatter = date => {

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchDeathsByAgeRange } from './fetchDeathsByAgeRange';
-import { fetchCasesByAgeRange } from './fetchCasesByAgeRange';
+import { fetchDeathsByAgeRange } from '../covid/fetchDeathsByAgeRange';
+import { fetchCasesByAgeRange } from '../covid/fetchCasesByAgeRange';
 
 const status = {
     NOT_LOADED:"not loaded",

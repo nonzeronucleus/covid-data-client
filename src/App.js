@@ -4,7 +4,7 @@ import Chart from './features/covid/Chart';
 // import {SourceToggle} from './features/covid/SourceToggle';
 import styled from 'styled-components';
 import CovidMenu from './features/covid/CovidMenu'
-import {DateRangePicker} from './features/covid/DateRangePicker'
+import {DateRangePicker} from './features/DateRange/DateRangePicker'
 
 
 const StyledApp = styled.div`

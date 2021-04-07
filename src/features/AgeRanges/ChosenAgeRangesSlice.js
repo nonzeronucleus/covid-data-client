@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchCasesByAgeRange } from './fetchCasesByAgeRange';
+import { fetchCasesByAgeRange } from '../covid/fetchCasesByAgeRange';
 
-import allColours from './allColours'
+import allColours from '../covid/allColours'
 
 const agesToFilterOut = ["unassigned", "60+", "00-59"]
 
