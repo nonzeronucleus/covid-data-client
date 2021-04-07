@@ -17,7 +17,8 @@ const useStyles = makeStyles({
     label: {
         textTransform: 'capitalize',
         writingMode: 'vertical-rl',
-        textOrientation: 'mixed'
+        textOrientation: 'mixed',
+        color:'blanchedalmond'
     },
 });
 
