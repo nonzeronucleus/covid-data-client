@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getAllCovidData } from '../Sources/SourceSlice';
 import { format, isFirstDayOfMonth } from "date-fns";
 import {debounce} from 'lodash';
+import { setDateRange, getDateRange } from './DateRangesSlice';
 
 import styled from 'styled-components';
 
@@ -35,11 +36,12 @@ const Picker = styled.div`
 
 
 export function DateRangePicker() {
+    const globalDateRange = useSelector(getDateRange);
+    const dispatch = useDispatch();
     const updateRange = ( newValue) => {
-        console.log({  newValue });
+        dispatch(setDateRange({start:newValue[0], end:newValue[1]}))
     };
     const classes = useStyles();
-    const [value, setValue] = React.useState([20, 37]);
     const covidData = useSelector(getAllCovidData);
     const marks = covidData
         .map((d, i) => ({ value: i, label: format(d.date, "dd/MMM/yy"), date: d.date }))
@@ -48,6 +50,14 @@ export function DateRangePicker() {
             const isFirst = i === 0 || (i > 10 && isFirstDayOfMonth(date));
             return isFirst;
         })
+    const [value, setValue] = React.useState([0, covidData.length-1]);
+
+    useEffect(() => {
+        console.log(globalDateRange)
+        setValue([globalDateRange.start, globalDateRange.end])
+    }, [globalDateRange])
+
+
 
     const [debouncedChangeRange] = React.useState(() =>
         debounce(updateRange, 300, {
