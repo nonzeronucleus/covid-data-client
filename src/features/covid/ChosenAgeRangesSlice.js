@@ -6,7 +6,7 @@ import allColours from './allColours'
 const agesToFilterOut = ["unassigned", "60+", "00-59"]
 
 const selectedRangesSlice = createSlice({
-  name: 'chosenRanges',
+  name: 'chosenAgeRanges',
   initialState: {ageRanges:[]},
   reducers: {
     toggleAgeRange(state,action) {
@@ -41,7 +41,7 @@ export const { toggleAgeRange, changeColour } = selectedRangesSlice.actions;
 export const selectedAgeRanges = state => getAgeRanges(state).filter(({isSelected}) => isSelected);
 
 export const getAgeRanges = state => {
-  const {ageRanges} = state.chosenRanges;
+  const {ageRanges} = state.chosenAgeRanges;
 
   return Object.keys(ageRanges).map(ageRange => {
     const {colour, isSelected} = ageRanges[ageRange];
@@ -49,4 +49,4 @@ export const getAgeRanges = state => {
   });
 }
 
-export const chosenRanges = selectedRangesSlice.reducer;
+export const chosenAgeRanges = selectedRangesSlice.reducer;

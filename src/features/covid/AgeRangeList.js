@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import {toggleAgeRange, changeColour, getAgeRanges} from './ChosenRangesSlice';
+import {toggleAgeRange, changeColour, getAgeRanges} from './ChosenAgeRangesSlice';
 import allColours from './allColours';
 
 

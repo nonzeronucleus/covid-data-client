@@ -1,5 +1,5 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import {chosenRanges} from '../features/covid/ChosenRangesSlice'
+import {chosenAgeRanges} from '../features/covid/ChosenAgeRangesSlice'
 import {covidData} from '../features/covid/CovidDataSlice'
 import {source} from '../features/covid/SourceSlice';
 import {loadingStatus} from '../features/covid/LoadingSlice';
@@ -7,7 +7,7 @@ import {loadingStatus} from '../features/covid/LoadingSlice';
 export default configureStore({
   reducer: {
     covidData,
-    chosenRanges,
+    chosenAgeRanges,
     source,
     loadingStatus
   },

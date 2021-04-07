@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from 'react-redux';
 import { getAllCovidData } from './SourceSlice';
-import { selectedAgeRanges } from './ChosenRangesSlice'
+import { selectedAgeRanges } from './ChosenAgeRangesSlice'
 import { format } from "date-fns";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { isAllLoaded } from './LoadingSlice';
