@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getCases, getDeaths } from './CovidDataSlice';
+import { getCases, getDeaths, getNumDaysForCases, getNumDaysForDeaths } from './CovidDataSlice';
 import sourceType from './sourceType';
 
 const sourceSlice = createSlice({
@@ -16,5 +16,7 @@ export const { setSource } = sourceSlice.actions;
 export const getSource = state => state.source;
 
 export const getAllCovidData = (state) => sourceType.cases === state.source ? getCases(state) : getDeaths(state);
+
+export const getNumDays = state => sourceType.cases === state.source ? getNumDaysForCases(state) : getNumDaysForDeaths(state);
 
 export const source = sourceSlice.reducer;

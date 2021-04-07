@@ -7,29 +7,17 @@ const agesToFilterOut = ["unassigned", "60+", "00-59"]
 
 const selectedRangesSlice = createSlice({
   name: 'chosenRanges',
-  initialState: {ranges:[]},
+  initialState: {ageRanges:[]},
   reducers: {
-    addRange(state, action) {
-      const range = action.payload;
-      const {ageRange} = range;
-
-      state.ranges[ageRange].isSelected = true;
-    },
-    removeRange(state, action) {
-      const {ageRange} = action.payload;
-
-      state.ranges[ageRange].isSelected = false;
-    },
-    toggleRange(state,action) {
+    toggleAgeRange(state,action) {
       const ageRange = action.payload;
 
-      state.ranges[ageRange].isSelected = !state.ranges[ageRange].isSelected;
+      state.ageRanges[ageRange].isSelected = !state.ageRanges[ageRange].isSelected;
     },
     changeColour(state, action) {
       const {ageRange, colour} = action.payload;
 
-      state.ranges[ageRange].colour = colour;
-
+      state.ageRanges[ageRange].colour = colour;
     }
 
   },
@@ -37,26 +25,26 @@ const selectedRangesSlice = createSlice({
     [fetchCasesByAgeRange.fulfilled]: (state, action) => {
       const {cases} = action.payload;
 
-      const ranges = cases[0].covidNumbersByAge
+      const ageRanges = cases[0].covidNumbersByAge
         .filter(({age}) => !agesToFilterOut.includes(age))
         .reduce((acc, {age}, i) => (
           {...acc, [age]:{colour:allColours[i], isSelected: false}}
         ), {})
 
-      return { ...state, ranges };
+      return { ...state, ageRanges };
     }
   }
 })
 
-export const { addRange, removeRange, toggleRange, changeColour } = selectedRangesSlice.actions;
+export const { toggleAgeRange, changeColour } = selectedRangesSlice.actions;
 
-export const selectedRanges = state => getRanges(state).filter(({isSelected}) => isSelected);
+export const selectedAgeRanges = state => getAgeRanges(state).filter(({isSelected}) => isSelected);
 
-export const getRanges = state => {
-  const {ranges} = state.chosenRanges;
+export const getAgeRanges = state => {
+  const {ageRanges} = state.chosenRanges;
 
-  return Object.keys(ranges).map(ageRange => {
-    const {colour, isSelected} = ranges[ageRange];
+  return Object.keys(ageRanges).map(ageRange => {
+    const {colour, isSelected} = ageRanges[ageRange];
     return {ageRange, colour, isSelected}
   });
 }

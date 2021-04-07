@@ -4,13 +4,14 @@ import Chart from './features/covid/Chart';
 // import {SourceToggle} from './features/covid/SourceToggle';
 import styled from 'styled-components';
 import CovidMenu from './features/covid/CovidMenu'
+import {DateRangePicker} from './features/covid/DateRangePicker'
 
 
 const StyledApp = styled.div`
   text-align: center;
   display: grid;
   grid-template-columns: 320px auto;
-  grid-template-rows: 60px 60px auto 60px;
+  grid-template-rows: 60px 60px auto 160px;
   grid-template-areas:
    "header chart"
    "drawer chart"
@@ -77,7 +78,7 @@ function App() {
                 <Chart/>
             </Tile>
             <Tile location="daterange" color="cadetblue">
-                A
+                <DateRangePicker />
             </Tile>
 
         </StyledApp>

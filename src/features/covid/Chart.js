@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from 'react-redux';
 import { getAllCovidData } from './SourceSlice';
-import { selectedRanges } from './ChosenRangesSlice'
+import { selectedAgeRanges } from './ChosenRangesSlice'
 import { format } from "date-fns";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { isAllLoaded } from './LoadingSlice';
@@ -17,14 +17,14 @@ const tooltipFormatter = (value, name, props) => JSON.stringify(value)  ///name.
 const labelFormatter = (value, name, props) => dateFormatter(value);
 
 export default function Chart() {
-    const ranges = useSelector(selectedRanges);
+    const ranges = useSelector(selectedAgeRanges);
     const chartData = useSelector(getAllCovidData);
     const data2 = chartData
         .map(({date, covidNumbersByAge}) => {
             return covidNumbersByAge.reduce((acc,covidNumbers) => {
                 return {...acc, date, [covidNumbers.age]:covidNumbers.rollingRate}
             }, {})
-        }).reverse();
+        });
 
     const isLoaded = useSelector(isAllLoaded);
 

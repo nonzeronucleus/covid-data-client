@@ -20,6 +20,7 @@ const getByAgeRange = (dataType)  => {
                         .map(({age, cases, rollingRate, rollingSum}) => {return {age:age.replace('_','-'), cases, rollingRate, rollingSum}} )
                 })
             })
+            .reverse();
         return covidData;
      });
   };

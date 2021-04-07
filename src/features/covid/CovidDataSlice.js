@@ -25,4 +25,7 @@ const covidDataSlice = createSlice({
 export const getCases = state => get(state, "covidData.cases", []);
 export const getDeaths = state => get(state, "covidData.deaths", []);
 
+export const getNumDaysForCases = state => state.covidData.cases.length;
+export const getNumDaysForDeaths = state => state.covidData.deaths.length;
+
 export const covidData = covidDataSlice.reducer;

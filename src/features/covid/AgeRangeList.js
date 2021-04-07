@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import {toggleRange, getRanges, changeColour} from './ChosenRangesSlice';
+import {toggleAgeRange, changeColour, getAgeRanges} from './ChosenRangesSlice';
 import allColours from './allColours';
 
 
@@ -102,7 +102,7 @@ const RangeRow = ({ageRange, isSelected, colour}) => {
     const { register } = useForm();
 
 
-    const handleToggle = (ageRange) => dispatch(toggleRange(ageRange))
+    const handleToggle = (ageRange) => dispatch(toggleAgeRange(ageRange))
     const handleColourChange = (e) => {
         const newColour = e.target.value;
         setSelectedColour(newColour)
@@ -134,7 +134,7 @@ const RangeRow = ({ageRange, isSelected, colour}) => {
 
 
 export const AgeRangePicker = () => {
-    const ranges = useSelector(getRanges);
+    const ranges = useSelector(getAgeRanges);
 
     return (
         <RangeList>
