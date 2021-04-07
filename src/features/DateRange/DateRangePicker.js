@@ -53,7 +53,6 @@ export function DateRangePicker() {
     const [value, setValue] = React.useState([0, covidData.length-1]);
 
     useEffect(() => {
-        console.log(globalDateRange)
         setValue([globalDateRange.start, globalDateRange.end])
     }, [globalDateRange])
 
@@ -65,16 +64,6 @@ export function DateRangePicker() {
           trailing: true
         })
       );
-
-
-
-    // const handleChange = (event, newValue) =>
-    // {
-    //     console.log(event.target)
-    //     setValue(newValue);
-    //     // _.debounce(debounce_fun,300)
-
-    // };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

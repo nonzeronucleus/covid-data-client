@@ -25,10 +25,16 @@ const selectedDateRangesSlice = createSlice({
             return { ...state, numDaysWithDeaths: deaths.length-1 };
         },
         [setSource]: (state, action) => {
-            const maxDays = action.payload === sourceTypes.cases ? state.numDaysWithCases : state.numDaysWithDeaths;
+            const dayShift = action.payload === sourceTypes.deaths ? state.numDaysWithDeaths - state.numDaysWithCases : state.numDaysWithCases- state.numDaysWithDeaths;
+            const start = state.start+dayShift;
+            const end = state.end+dayShift;
+
             return {
                 ...state,
-                end: Math.min(state.end, maxDays)
+                start,
+                end
+
+                // end: Math.min(state.end, maxDays)
             }
 
         }
@@ -37,16 +43,5 @@ const selectedDateRangesSlice = createSlice({
 
 export const { setDateRange } = selectedDateRangesSlice.actions;
 export const getDateRange = ({chosenDateRanges:{start, end}}) => ({start, end})
-
-// export const selectedAgeRanges = state => getAgeRanges(state).filter(({isSelected}) => isSelected);
-
-// export const getAgeRanges = state => {
-//   const {ageRanges} = state.chosenAgeRanges;
-
-//   return Object.keys(ageRanges).map(ageRange => {
-//     const {colour, isSelected} = ageRanges[ageRange];
-//     return {ageRange, colour, isSelected}
-//   });
-// }
 
 export const chosenDateRanges = selectedDateRangesSlice.reducer;

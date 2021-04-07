@@ -7,7 +7,7 @@ const allColours = [
     "maroon", "orange",
     "teal", "grey",
     "silver", "black",
-    "brown", "Chartreuse",
+    "brown", "FireBrick",
     "coral", "DarkMagenta",
     "IndianRed"
 ];

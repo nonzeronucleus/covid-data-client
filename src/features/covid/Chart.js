@@ -5,6 +5,7 @@ import { selectedAgeRanges } from '../AgeRanges/ChosenAgeRangesSlice'
 import { format } from "date-fns";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { isAllLoaded } from '../Loading/LoadingSlice';
+import { getDateRange} from '../DateRange/DateRangesSlice';
 
 
 const dateFormatter = date => {
@@ -19,12 +20,16 @@ const labelFormatter = (value, name, props) => dateFormatter(value);
 export default function Chart() {
     const ranges = useSelector(selectedAgeRanges);
     const chartData = useSelector(getAllCovidData);
+    const {start,end} = useSelector(getDateRange);
+
     const data2 = chartData
+        .slice(start,end+1)
         .map(({date, covidNumbersByAge}) => {
             return covidNumbersByAge.reduce((acc,covidNumbers) => {
                 return {...acc, date, [covidNumbers.age]:covidNumbers.rollingRate}
             }, {})
-        });
+        })
+
 
     const isLoaded = useSelector(isAllLoaded);
 
