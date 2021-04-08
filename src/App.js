@@ -10,8 +10,8 @@ import {DateRangePicker} from './features/DateRange/DateRangePicker'
 const StyledApp = styled.div`
   text-align: center;
   display: grid;
-  grid-template-columns: 320px auto;
-  grid-template-rows: 60px 60px auto 160px;
+  grid-template-columns: 320px minmax(600px,auto);
+  grid-template-rows: 60px 60px minmax(600px,auto) 160px;
   grid-template-areas:
    "header chart"
    "drawer chart"
