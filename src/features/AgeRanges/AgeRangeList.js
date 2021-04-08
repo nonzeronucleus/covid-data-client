@@ -6,11 +6,13 @@ import {toggleAgeRange, changeColour, getAgeRanges} from './ChosenAgeRangesSlice
 import allColours from '../covid/allColours';
 
 
+const fontSize = '20px';
+
 const RangeList = styled.ul`
     align:left;
     list-style-type: none;
     padding:0px;
-    font-size: 22px;
+    font-size: ${fontSize};
 
     > li {
         text-align:center;
@@ -77,7 +79,7 @@ const ColourSelection = styled.span`
     width:160px;
     // font-size: 18px;
     > select {
-        font-size: 22px;
+        font-size: ${fontSize};
         border-radius:8px;
         // color:${props => props.colour}
     }

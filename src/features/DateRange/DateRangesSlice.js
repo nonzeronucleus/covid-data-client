@@ -10,7 +10,9 @@ const selectedDateRangesSlice = createSlice({
     initialState: { start: 0, end: 0, numDaysWithCases: 0, numDaysWithDeaths: 0 },
     reducers: {
         setDateRange(state, action) {
-            return { ...state, start: action.payload.start, end: action.payload.end }
+            const start = Math.min(action.payload.start, action.payload.end );
+            const end = Math.max(action.payload.start, action.payload.end );
+            return { ...state, start, end }
         }
     },
     extraReducers: {

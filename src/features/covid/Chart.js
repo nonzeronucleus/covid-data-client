@@ -6,6 +6,8 @@ import { format } from "date-fns";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { isAllLoaded } from '../Loading/LoadingSlice';
 import { getDateRange} from '../DateRange/DateRangesSlice';
+import { getDataToDisplay} from '../DataToDisplay/DataToDisplaySlice';
+import dataType from '../DataToDisplay/dataTypes';
 
 
 const dateFormatter = date => {
@@ -21,12 +23,16 @@ export default function Chart() {
     const ranges = useSelector(selectedAgeRanges);
     const chartData = useSelector(getAllCovidData);
     const {start,end} = useSelector(getDateRange);
+    const dataToDisplay = useSelector(getDataToDisplay);
+
 
     const data2 = chartData
-        .slice(start,end+1)
+        .slice(Math.max(0, start),end+1)
         .map(({date, covidNumbersByAge}) => {
             return covidNumbersByAge.reduce((acc,covidNumbers) => {
-                return {...acc, date, [covidNumbers.age]:covidNumbers.rollingRate}
+                return {...acc, date, [covidNumbers.age]:
+                    dataToDisplay === dataType.rate ? covidNumbers.rollingRate : covidNumbers.rollingSum
+                }
             }, {})
         })
 
