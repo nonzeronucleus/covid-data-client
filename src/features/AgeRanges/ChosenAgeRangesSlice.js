@@ -1,25 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchCasesByAgeRange } from '../covid/fetchCasesByAgeRange';
-
 import allColours from '../covid/allColours'
-
+import { pickBy} from 'lodash';
 const agesToFilterOut = ["unassigned", "60+", "00-59"]
 
-const selectedRangesSlice = createSlice({
-  name: 'chosenAgeRanges',
-  initialState: {ageRanges:[]},
+const ageRangesSlice = createSlice({
+  name: 'ageRanges',
+  initialState: {},
   reducers: {
     toggleAgeRange(state,action) {
       const ageRange = action.payload;
 
-      state.ageRanges[ageRange].isSelected = !state.ageRanges[ageRange].isSelected;
+      state[ageRange].isSelected = !state[ageRange].isSelected;
     },
     changeColour(state, action) {
       const {ageRange, colour} = action.payload;
 
-      state.ageRanges[ageRange].colour = colour;
+      state[ageRange].colour = colour;
     }
-
   },
   extraReducers: {
     [fetchCasesByAgeRange.fulfilled]: (state, action) => {
@@ -31,17 +29,15 @@ const selectedRangesSlice = createSlice({
           {...acc, [age]:{colour:allColours[i], isSelected: false}}
         ), {})
 
-      return { ...state, ageRanges };
+      return ageRanges;
     }
   }
 })
 
-export const { toggleAgeRange, changeColour } = selectedRangesSlice.actions;
-
-export const selectedAgeRanges = state => getAgeRanges(state).filter(({isSelected}) => isSelected);
+export const { toggleAgeRange, changeColour } = ageRangesSlice.actions;
 
 export const getAgeRanges = state => {
-  const {ageRanges} = state.chosenAgeRanges;
+  const {ageRanges} = state;
 
   return Object.keys(ageRanges).map(ageRange => {
     const {colour, isSelected} = ageRanges[ageRange];
@@ -49,4 +45,10 @@ export const getAgeRanges = state => {
   });
 }
 
-export const chosenAgeRanges = selectedRangesSlice.reducer;
+export const getSelectedAgeRanges = ({ageRanges}) => {
+  return pickBy(ageRanges, (value) => {
+    return value.isSelected
+  });
+}
+
+export const ageRanges = ageRangesSlice.reducer;
