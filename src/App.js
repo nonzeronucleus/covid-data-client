@@ -11,12 +11,13 @@ const StyledApp = styled.div`
   text-align: center;
   display: grid;
   grid-template-columns: 320px minmax(600px,auto);
-  grid-template-rows: 60px 60px minmax(600px,auto) 160px;
+  grid-template-rows: 60px 60px minmax(600px,auto) 160px 50px;
   grid-template-areas:
    "header chart"
    "drawer chart"
    "drawer chart"
-   "drawer daterange";
+   "drawer daterange"
+   "footer footer";
   width:99%;
 //   height:100%;
   padding:0px;
@@ -39,8 +40,7 @@ const Tile = styled.div`
   font-family:'Roboto';
   font-size:'x-large';
   padding:10px;
-
-
+  text-align:${props => props.textAlign === undefined ? "center" : props.textAlign} ;
 
   margin:4px;
   border-width:4px;
@@ -53,6 +53,10 @@ const Tile = styled.div`
 const Title = styled.h1`
     margin:0px;
     color:floralwhite;
+`;
+
+const Attribution = styled.a`
+    font-size:small;
 `;
 
 
@@ -79,6 +83,9 @@ function App() {
             </Tile>
             <Tile location="daterange" color="cadetblue">
                 <DateRangePicker />
+            </Tile>
+            <Tile location="footer" color="cadetblue" textAlign="left">
+                <Attribution href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" target="_blank">Contains public sector information licensed under the Open Government Licence v3.0.</Attribution>
             </Tile>
 
         </StyledApp>
