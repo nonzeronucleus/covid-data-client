@@ -18,7 +18,7 @@ const StyledApp = styled.div`
    "drawer chart"
    "drawer daterange";
   width:99%;
-  height:90%;
+//   height:100%;
   padding:0px;
   border-width:20px;
   border-radius:20px;
