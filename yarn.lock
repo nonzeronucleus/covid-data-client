@@ -7338,6 +7338,11 @@ js-base64@^2.1.8:
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.6.4.tgz#f4e686c5de1ea1f867dbcad3d46d969428df98c4"
   integrity sha512-pZe//GGmwJndub7ZghVHz7vjb2LgC1m8B07Au3eYqeqv9emhESByMXxaEgkUkEqJe87oBbSniGYoQNIBklc7IQ==
 
+js-cookie@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
@@ -9966,6 +9971,14 @@ react-compound-slider@^3.3.1:
     "@babel/runtime" "^7.12.5"
     d3-array "^2.8.0"
     warning "^4.0.3"
+
+react-cookie-consent@^6.2.3:
+  version "6.2.3"
+  resolved "https://registry.yarnpkg.com/react-cookie-consent/-/react-cookie-consent-6.2.3.tgz#fdfbea5ea07ac484c46046418514865c33319015"
+  integrity sha512-PCagmezwHF0oEqORcY6jWlbwUeu1u1zFFi3gc9TL7H4bTk4qR2uLFBKKVVN5gfScTLwdoJtH8sMbgj/cOmUn0A==
+  dependencies:
+    js-cookie "^2.2.1"
+    prop-types "^15.7.2"
 
 react-dev-utils@^11.0.3:
   version "11.0.3"

@@ -5,6 +5,7 @@ import Chart from './features/covid/Chart';
 import styled from 'styled-components';
 import CovidMenu from './features/covid/CovidMenu'
 import {DateRangePicker} from './features/DateRange/DateRangePicker'
+import CookieConsent from "react-cookie-consent";
 
 
 const StyledApp = styled.div`
@@ -87,6 +88,11 @@ function App() {
             <Tile location="footer" color="cadetblue" textAlign="left">
                 <Attribution href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" target="_blank">Contains public sector information licensed under the Open Government Licence v3.0.</Attribution>
             </Tile>
+            <CookieConsent
+                enableDeclineButton
+            >
+                This website uses cookies to enhance the user experience.
+            </CookieConsent>
 
         </StyledApp>
     )
