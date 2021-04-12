@@ -84,9 +84,10 @@ export default function Chart() {
                     scale="time"
                     dataKey="date"
                     tickFormatter={dateFormatter}
+                    tickLine="true"
                     tick={{stroke: 'black', strokeWidth: 0, fontSize: 14}}
                 />
-                <YAxis />
+                <YAxis label={{value:dataToDisplay, angle:"-90", position:"insideLeft"}}/>
                 <Tooltip formatter = {tooltipFormatter} labelFormatter={labelFormatter}/>
                 {/* <Legend /> */}
                 {
