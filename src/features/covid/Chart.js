@@ -59,7 +59,7 @@ export default function Chart() {
 
     if (dataToDisplay === dataType.percentage) {
         selectedCovidData
-            .forEach((d) => {
+            .forEach((d, i) => {
                 const {date} = d;
 
                 Object.keys(maxValues).forEach((age) => {
@@ -71,6 +71,23 @@ export default function Chart() {
 
                 return {date, ...d};
             })
+    }
+    else if (dataToDisplay === dataType.change) {
+        selectedCovidData
+            .forEach((day, i) => {
+                const {date} = day;
+
+                Object.keys(selectedAgeRanges).forEach(age => {
+                    // const prevDay = i>0 ? selectedCovidData[i-1][age] : day[age];
+                    console.log(i, selectedCovidData[i-1]);
+                    // day[age] = day[age]/prevDay;
+                    // console.log(age)
+                })
+                // const prev = 
+
+                return {date, ...day}
+            })
+            
     }
 
     return (
