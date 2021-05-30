@@ -38,7 +38,7 @@ export default function Chart() {
     const selectedCovidData = chartData
         .slice(Math.max(0, start),end+1)
         .map(({date, covidNumbersByAge}) => {
-            return covidNumbersByAge.reduce((acc,covidNumbers) => {
+            return covidNumbersByAge.reduce((acc,covidNumbers)  => {
                 const ageRange = covidNumbers.age;
 
                 if (selectedAgeRanges[ageRange]===undefined) {
