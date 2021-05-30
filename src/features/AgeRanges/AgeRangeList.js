@@ -133,7 +133,7 @@ const RangeRow = ({ageRange, isSelected, colour}) => {
 
     return <AgeRangeRow>
             <label>
-                <input type="checkbox" checked={isSelected} ref={register} onChange={() => handleToggle(ageRange)}/>
+                <input type="checkbox" name = {ageRange} checked={isSelected} ref={register} onChange={() => handleToggle(ageRange)}/>
                 {ageRange.replace("_","-")}
             </label>
              <ColourSelection colour = {selectedColour} >
