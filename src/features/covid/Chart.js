@@ -19,6 +19,16 @@ const tooltipFormatter = (value, name, props) => JSON.stringify(value)  ///name.
 
 const labelFormatter = (value, name, props) => dateFormatter(value);
 
+const getValueToDisplay = (data, dataToDisplay) => {
+    // console.log({data, dataToDisplay})
+    return ({
+        [dataType.rate]:data.rollingRate,
+        [dataType.total]:data.daily,
+        [dataType.percentage]:data.rollingRate,
+        [dataType.change]:data.growthRate
+    })[dataToDisplay] ?? 0
+}
+
 export default function Chart() {
     const isLoaded = useSelector(isAllLoaded);
     const chartData = useSelector(getAllCovidData);
@@ -45,8 +55,11 @@ export default function Chart() {
                     return acc;
                 }
 
-                const count = dataToDisplay === dataType.rate ? covidNumbers.rollingRate : covidNumbers.rollingSum;
+                const count = getValueToDisplay(covidNumbers, dataToDisplay)
+                
+                //dataToDisplay === dataType.rate ? covidNumbers.rollingRate : covidNumbers.daily;
                 maxValues[ageRange]=Math.max(maxValues[ageRange], count );
+                // console.log({count})
 
                 return {
                     ...acc,
@@ -68,27 +81,30 @@ export default function Chart() {
                     d[age]=val/maxValues[age]*100;
                 })
 
-
                 return {date, ...d};
             })
     }
-    else if (dataToDisplay === dataType.change) {
-        selectedCovidData
-            .forEach((day, i) => {
-                const {date} = day;
+    // else if (dataToDisplay === dataType.change) {
+    //     selectedCovidData
+    //         .forEach((day, i) => {
+    //             const {date} = day;
 
-                Object.keys(selectedAgeRanges).forEach(age => {
-                    // const prevDay = i>0 ? selectedCovidData[i-1][age] : day[age];
-                    console.log(i, selectedCovidData[i-1]);
-                    // day[age] = day[age]/prevDay;
-                    // console.log(age)
-                })
-                // const prev = 
+    //             Object.keys(selectedAgeRanges).forEach(age => {
+    //                 const yesterday = selectedCovidData[i-1];
+    //                 const total = yesterday === undefined ? 0 : yesterday[age];
+    //                 day[age] = day[age] + total;
+                    
+    //                 // const prevDay = i>0 ? selectedCovidData[i-1][age] : day[age];
+    //                 // console.log(i, selectedCovidData[i-1]);
+    //                 // day[age] = day[age]/prevDay;
+    //                 // console.log(age)
+    //             })
+    //             // const prev = 
 
-                return {date, ...day}
-            })
+    //             return {date, ...day}
+    //         })
             
-    }
+    // }
 
     return (
         <ResponsiveContainer  width="99%">
