@@ -23,7 +23,7 @@ const getValueToDisplay = (data, dataToDisplay) => {
     // console.log({data, dataToDisplay})
     return ({
         [dataType.rate]:data.rollingRate,
-        [dataType.total]:data.daily,
+        [dataType.total]:data.rollingSum,
         [dataType.percentage]:data.rollingRate,
         [dataType.change]:data.growthRate
     })[dataToDisplay] ?? 0
@@ -57,9 +57,7 @@ export default function Chart() {
 
                 const count = getValueToDisplay(covidNumbers, dataToDisplay)
                 
-                //dataToDisplay === dataType.rate ? covidNumbers.rollingRate : covidNumbers.daily;
                 maxValues[ageRange]=Math.max(maxValues[ageRange], count );
-                // console.log({count})
 
                 return {
                     ...acc,
@@ -69,6 +67,7 @@ export default function Chart() {
             }, {})
         })
 
+    const max = Math.ceil(_.max(Object.values(maxValues)));
 
     if (dataToDisplay === dataType.percentage) {
         selectedCovidData
@@ -84,28 +83,9 @@ export default function Chart() {
                 return {date, ...d};
             })
     }
-    // else if (dataToDisplay === dataType.change) {
-    //     selectedCovidData
-    //         .forEach((day, i) => {
-    //             const {date} = day;
 
-    //             Object.keys(selectedAgeRanges).forEach(age => {
-    //                 const yesterday = selectedCovidData[i-1];
-    //                 const total = yesterday === undefined ? 0 : yesterday[age];
-    //                 day[age] = day[age] + total;
-                    
-    //                 // const prevDay = i>0 ? selectedCovidData[i-1][age] : day[age];
-    //                 // console.log(i, selectedCovidData[i-1]);
-    //                 // day[age] = day[age]/prevDay;
-    //                 // console.log(age)
-    //             })
-    //             // const prev = 
-
-    //             return {date, ...day}
-    //         })
-            
-    // }
-
+    const ticks = [...Array(max).keys()];
+    
     return (
         <ResponsiveContainer  width="99%">
             <LineChart width={730} height={250} data={selectedCovidData}
@@ -120,7 +100,10 @@ export default function Chart() {
                     tickLine="true"
                     tick={{stroke: 'black', strokeWidth: 0, fontSize: 14}}
                 />
-                <YAxis label={{value:dataToDisplay, angle:"-90", position:"insideLeft"}}/>
+                <YAxis 
+                    ticks = { (dataToDisplay  === dataType.change) ? ticks : undefined }
+                    label={{value:dataToDisplay, angle:"-90", position:"insideLeft"}}
+                />
                 <Tooltip formatter = {tooltipFormatter} labelFormatter={labelFormatter}/>
                 {/* <Legend /> */}
                 {
