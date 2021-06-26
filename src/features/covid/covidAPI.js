@@ -1,5 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
+import filterAgeRanges from '../AgeRanges/filterAgeRanges';
 
 const covidDataTypes = {
     deaths: {
@@ -24,7 +25,13 @@ const calculateGrowthRate = (currentRate, oldRate) => {
     return calcRRate;
 }
 
+
+const getTotalProto = dataType => (acc, curr) => acc+dataType.daily(curr);
+
+
 const getByAgeRange = (dataType)  => {
+    const getTotal = getTotalProto(dataType)
+    
     return axios.get("https://api.coronavirus.data.gov.uk/v1/data?filters=areaType=nation;areaName=England&structure=%7B%22areaType%22:%22areaType%22,%22areaName%22:%22areaName%22,%22areaCode%22:%22areaCode%22,%22date%22:%22date%22,%22"+
         dataType.endpoint+
         "%22:%22"+
@@ -32,41 +39,36 @@ const getByAgeRange = (dataType)  => {
         "%22%7D&format=json")
     .then(({ data }) => {
         const orderedData = data.data.reverse();
-
+ 
         return orderedData
             .map((record, idx) => {
                 const covidData = record[dataType.dataLabel];
+                const dailyTotal = filterAgeRanges(covidData).reduce(getTotal,0);
+
 
                 return ({
                     date:new Date(record.date),
                     covidNumbersByAge:covidData
                         .map(
                             ({age,  cases, deaths, rollingRate, rollingSum, ...rest}, i) => {
-                                // if(age==="15_19") {
-                                    // console.log(idx, record.date)
-                                // }
                                 const lastWeekRate = _.get(orderedData[idx-7], [dataType.dataLabel, i, 'rollingRate'],15);
                                 
-                                // idx > 7 ? covidData[idx-7] : {rollingRate:1};
-                                const dailyTotal = dataType.daily({cases, deaths});
-                                const prevDaily = dataType.daily(covidData[idx-1]);
-                                // console.log({lastWeekRate})
+                                const dailyForAge = dataType.daily({cases, deaths});
+                                const percentage = dailyTotal > 0 ? Math.round(dailyForAge/dailyTotal*1000)/10 : 0;
+
+                                // console.log({dailyTotal, dailyForAge,percentage})
+                                const prevDailyForAge = dataType.daily(covidData[idx-1]);
                                 const growthRate = calculateGrowthRate(rollingRate,lastWeekRate);
-
-                                // console.log({calcRRate});
-
-                                if(age==="15_19") {
-                                    // console.log(orderedData[idx-7])
-                                    // console.log({rollingRate,lastWeekRate})
-                                    // console.log({lastWeek, rollingRate, calcRRate})
-                                }
-
+                                const population = rollingRate > 0 ? rollingSum/rollingRate*100000 : 0;
                                 return {
                                     age:age.replace('_','-'), 
-                                    daily:dailyTotal-prevDaily, 
+                                    daily:dailyForAge-prevDailyForAge, 
                                     growthRate: growthRate, 
                                     rollingRate, 
-                                    rollingSum
+                                    rollingSum,
+                                    population,
+                                    percentage,
+                                    dailyTotal
                                 }
                             } 
                         )

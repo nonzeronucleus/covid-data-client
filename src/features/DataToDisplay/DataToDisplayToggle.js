@@ -25,6 +25,7 @@ export const DataToDisplayToggle = () => {
             <DataInput value = {dataType.rate} />
             <DataInput value = {dataType.total} />
             <DataInput value = {dataType.percentage} />
+            <DataInput value = {dataType.percentageFromPeak} />
             <DataInput value = {dataType.change} />
         </Toggle>)
 }

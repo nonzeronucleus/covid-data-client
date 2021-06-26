@@ -1,7 +1,8 @@
 export const dataTypes = {
     rate: "Rate",
     total:"Total",
-    percentage:"Percent from peak",
+    percentageFromPeak:"Percent from peak",
+    percentage:"Percent",
     change: "Change last 7 days"
 }
 

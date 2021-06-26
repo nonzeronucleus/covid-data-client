@@ -8,7 +8,7 @@ import { isAllLoaded } from '../Loading/LoadingSlice';
 import { getDateRange} from '../DateRange/DateRangesSlice';
 import { getDataToDisplay} from '../DataToDisplay/DataToDisplaySlice';
 import dataType from '../DataToDisplay/dataTypes';
-import _ from 'lodash';
+import _ from 'lodash'; 
 
 const dateFormatter = date => {
     return format(new Date(date), "dd/MMM/yy");
@@ -22,9 +22,11 @@ const labelFormatter = (value, name, props) => dateFormatter(value);
 const getValueToDisplay = (data, dataToDisplay) => {
     // console.log({data, dataToDisplay})
     return ({
+        // [dataType.population]:data.population,
         [dataType.rate]:data.rollingRate,
         [dataType.total]:data.rollingSum,
-        [dataType.percentage]:data.rollingRate,
+        [dataType.percentageFromPeak]:data.rollingRate,
+        [dataType.percentage]:data.percentage,
         [dataType.change]:data.growthRate
     })[dataToDisplay] ?? 0
 }
@@ -35,9 +37,10 @@ export default function Chart() {
     const {start,end} = useSelector(getDateRange);
     const dataToDisplay = useSelector(getDataToDisplay);
     const selectedAgeRanges = useSelector(getSelectedAgeRanges);
+
     const maxValues = _.mapValues(selectedAgeRanges, () => 0);
 
-    if (!isLoaded) {
+    if (!isLoaded) {  
         return <h2>Loading</h2>
     }
 
@@ -67,9 +70,9 @@ export default function Chart() {
             }, {})
         })
 
-    const max = Math.ceil(_.max(Object.values(maxValues)));
+        const max = Math.ceil(_.max(Object.values(maxValues)));
 
-    if (dataToDisplay === dataType.percentage) {
+    if (dataToDisplay === dataType.percentageFromPeak) {
         selectedCovidData
             .forEach((d, i) => {
                 const {date} = d;
@@ -83,6 +86,7 @@ export default function Chart() {
                 return {date, ...d};
             })
     }
+
 
     const ticks = [...Array(max).keys()];
     

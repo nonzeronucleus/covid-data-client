@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchCasesByAgeRange } from '../covid/fetchCasesByAgeRange';
 import allColours from '../covid/allColours'
 import { pickBy} from 'lodash';
-const agesToFilterOut = ["unassigned", "60+", "00-59"]
+import filterAgeRanges from './filterAgeRanges';
+// const agesToFilterOut = ["unassigned", "60+", "00-59"]
 
 const ageRangesSlice = createSlice({
   name: 'ageRanges',
@@ -23,10 +24,10 @@ const ageRangesSlice = createSlice({
     [fetchCasesByAgeRange.fulfilled]: (state, action) => {
       const {cases} = action.payload;
 
-      const ageRanges = cases[0].covidNumbersByAge
-        .filter(({age}) => !agesToFilterOut.includes(age))
+      const ageRanges = filterAgeRanges(cases[0].covidNumbersByAge)
+        // .filter(({age}) => !agesToFilterOut.includes(age))
         .reduce((acc, {age}, i) => (
-          {...acc, [age]:{colour:allColours[i], isSelected: false}}
+          {...acc, [age]:{colour:allColours[i], isSelected: true}}
         ), {})
 
       return ageRanges;
