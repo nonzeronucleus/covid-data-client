@@ -24,7 +24,7 @@ const getValueToDisplay = (data, dataToDisplay) => {
     return ({
         // [dataType.population]:data.population,
         [dataType.rate]:data.rollingRate,
-        [dataType.total]:data.rollingSum,
+        [dataType.total]:data.daily,
         [dataType.percentageFromPeak]:data.rollingRate,
         [dataType.percentage]:data.percentage,
         [dataType.change]:data.growthRate
