@@ -27,6 +27,7 @@ const calculateGrowthRate = (currentRate, oldRate) => {
 
 
 const getTotalProto = dataType => (acc, curr) => acc+dataType.daily(curr);
+const getRollingTotal = (acc, curr) => acc+curr.rollingSum;
 
 
 const getByAgeRange = (dataType)  => {
@@ -44,6 +45,8 @@ const getByAgeRange = (dataType)  => {
             .map((record, idx) => {
                 const covidData = record[dataType.dataLabel];
                 const dailyTotal = filterAgeRanges(covidData).reduce(getTotal,0);
+                const rollingTotal = filterAgeRanges(covidData).reduce(getRollingTotal, 0);
+
 
 
                 return ({
@@ -54,7 +57,8 @@ const getByAgeRange = (dataType)  => {
                                 const lastWeekRate = _.get(orderedData[idx-7], [dataType.dataLabel, i, 'rollingRate'],15);
                                 
                                 const dailyForAge = dataType.daily({cases, deaths});
-                                const percentage = dailyTotal > 0 ? Math.round(dailyForAge/dailyTotal*1000)/10 : 0;
+                                //const percentage = dailyTotal > 0 ? Math.round(dailyForAge/dailyTotal*1000)/10 : 0;
+                                const percentage = rollingTotal > 0 ? Math.round(rollingSum/rollingTotal*1000)/10 : 0;
 
                                 // console.log({dailyTotal, dailyForAge,percentage})
                                 const prevDailyForAge = dataType.daily(covidData[idx-1]);
