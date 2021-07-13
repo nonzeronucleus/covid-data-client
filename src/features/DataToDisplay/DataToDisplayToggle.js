@@ -24,6 +24,7 @@ export const DataToDisplayToggle = () => {
         <Toggle  id="datatypes">
             <DataInput value = {dataType.rate} />
             <DataInput value = {dataType.total} />
+            <DataInput value = {dataType.rollingSum} />
             <DataInput value = {dataType.percentage} />
             <DataInput value = {dataType.percentageFromPeak} />
             <DataInput value = {dataType.change} />
